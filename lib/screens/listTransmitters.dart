@@ -38,184 +38,7 @@ class _HomeState extends State<Home> {
 
             Container(
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-              padding: EdgeInsets.fromLTRB(5, 13, 5, 13),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Text(
-                      '7539KTX',
-                      style: TextStyle(color: CustomColors.TextGrey),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Piscina Fazenda Vinagrete',
-                      style: TextStyle(
-                        color: CustomColors.TextHeader,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: FaIcon(
-                      FontAwesomeIcons.eye, 
-                      color: CustomColors.TextHeaderGrey,
-                      size: 20,
-                      ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
-                    child: FaIcon(
-                      FontAwesomeIcons.ellipsisV,
-                      color: CustomColors.TextHeaderGrey,
-                      size: 20,
-                      ),
-                  ),
-                ],
-              ),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: [0.015, 0.015],
-                  colors: [CustomColors.BlueDark, Colors.white],
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: CustomColors.GreyBorder,
-                    blurRadius: 10.0,
-                    spreadRadius: 5.0,
-                    offset: Offset(0.0, 0.0),
-                  ),
-                ],
-              ),
-            ),
-
-            Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-              padding: EdgeInsets.fromLTRB(5, 13, 5, 13),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Text(
-                      '4929YEU',
-                      style: TextStyle(color: CustomColors.TextGrey),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Fábrica Campinas Unidade I',
-                      style: TextStyle(
-                        color: CustomColors.TextHeader,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    margin: EdgeInsets.all(0.1),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: CustomColors.TextHeaderGrey,
-                        ),
-                      padding: EdgeInsets.all(0.1),
-                      tooltip: 'Visualizar',
-                      onPressed: () {},
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    margin: EdgeInsets.all(0.1),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: CustomColors.TextHeaderGrey,
-                        ),
-                      padding: EdgeInsets.all(0.1),
-                      tooltip: 'Opções',
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: [0.015, 0.015],
-                  colors: [CustomColors.GreenIcon, Colors.white],
-                ),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: CustomColors.GreyBorder,
-                    blurRadius: 10.0,
-                    spreadRadius: 5.0,
-                    offset: Offset(0.0, 0.0),
-                  ),
-                ],
-              ),
-            ),
-
-            Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-              padding: EdgeInsets.fromLTRB(5, 13, 5, 13),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Text(
-                      '7394QSA',
-                      style: TextStyle(color: CustomColors.TextGrey),
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      'Ensacadeira Vinícius',
-                      style: TextStyle(
-                        color: CustomColors.TextHeader,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    margin: EdgeInsets.all(0.0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: CustomColors.TextHeaderGrey,
-                        ),
-                      tooltip: 'Visualizar',
-                      onPressed: () {},
-                    ),
-                  ),
-                  Card(
-                    elevation: 0,
-                    margin: EdgeInsets.all(0.0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: CustomColors.TextHeaderGrey,
-                        ),
-                      tooltip: 'Opções',
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(5.0),
-                ),
                 gradient: LinearGradient(
                   stops: [0.015, 0.015],
                   colors: [CustomColors.YellowIcon, Colors.white],
@@ -225,12 +48,212 @@ class _HomeState extends State<Home> {
                     color: CustomColors.GreyBorder,
                     blurRadius: 10.0,
                     spreadRadius: 5.0,
-                    offset: Offset(0.0, 0.0),
                   ),
                 ],
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              child: Card(
+                elevation: 0,
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        '1394QS',
+                        style: TextStyle(color: CustomColors.TextGrey),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Fábrica Campinas',
+                        style: TextStyle(
+                          color: CustomColors.TextHeader,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.remove_red_eye,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
+                      tooltip: 'Visualizar',
+                      onPressed: () {},
+                      color: Colors.blue,
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
+                      tooltip: 'Opções',
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  stops: [0.015, 0.015],
+                  colors: [CustomColors.YellowIcon, Colors.white],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: CustomColors.GreyBorder,
+                    blurRadius: 10.0,
+                    spreadRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              child: Card(
+                elevation: 0,
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        '1394QS',
+                        style: TextStyle(color: CustomColors.TextGrey),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Fábrica Campinas Unidade II Centro',
+                        style: TextStyle(
+                          color: CustomColors.TextHeader,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.remove_red_eye,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
+                      tooltip: 'Visualizar',
+                      onPressed: () {},
+                      color: Colors.blue,
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
+                      tooltip: 'Opções',
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
               ),
             ),
             
+            Container(
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  stops: [0.015, 0.015],
+                  colors: [CustomColors.BlueIcon, Colors.white],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: CustomColors.GreyBorder,
+                    blurRadius: 10.0,
+                    spreadRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              child: Card(
+                elevation: 0,
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        '7260KP',
+                        style: TextStyle(color: CustomColors.TextGrey),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Piscina Fazenda',
+                        style: TextStyle(
+                          color: CustomColors.TextHeader,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
+                      tooltip: 'Opções',
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  stops: [0.015, 0.015],
+                  colors: [CustomColors.BlueIcon, Colors.white],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: CustomColors.GreyBorder,
+                    blurRadius: 10.0,
+                    spreadRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              child: Card(
+                elevation: 0,
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Text(
+                        '7260KP',
+                        style: TextStyle(color: CustomColors.TextGrey),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Piscina Fazendinha Nóbrega II ',
+                        style: TextStyle(
+                          color: CustomColors.TextHeader,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
+                      tooltip: 'Opções',
+                      onPressed: () {},
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             SizedBox(height: 80),
           ],
         ),
