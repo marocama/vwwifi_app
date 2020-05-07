@@ -1,4 +1,3 @@
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:vwwifi/util.dart';
 
@@ -9,6 +8,8 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
+enum Choice { visualizar, editar, apagar }
+
 class _HomeState extends State<Home> {
   int _count = 0;
 
@@ -16,7 +17,18 @@ class _HomeState extends State<Home> {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text('VW Wi-Fi'),
+        leading: Container(
+          margin: EdgeInsets.only(left: 20.0),
+          child: Image.asset('assets/images/logoVW.png'),
+        ),
+        title: Text('VW Soluções'),
+        actions: <Widget>[
+          Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            child: Icon(Icons.account_circle, size: 28, semanticLabel: 'Usuário'),
+          ),
+        ],
       ),
 
       body: Container(
@@ -35,131 +47,13 @@ class _HomeState extends State<Home> {
                     color: CustomColors.TextSubHeader),
               ),
             ),
-
-            Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: [0.015, 0.015],
-                  colors: [CustomColors.YellowIcon, Colors.white],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: CustomColors.GreyBorder,
-                    blurRadius: 10.0,
-                    spreadRadius: 5.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              ),
-              child: Card(
-                elevation: 0,
-                color: Colors.transparent,
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Text(
-                        '1394QS',
-                        style: TextStyle(color: CustomColors.TextGrey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Fábrica Campinas',
-                        style: TextStyle(
-                          color: CustomColors.TextHeader,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: CustomColors.TextHeaderGrey,
-                      ),
-                      tooltip: 'Visualizar',
-                      onPressed: () {},
-                      color: Colors.blue,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: CustomColors.TextHeaderGrey,
-                      ),
-                      tooltip: 'Opções',
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            Container(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: [0.015, 0.015],
-                  colors: [CustomColors.YellowIcon, Colors.white],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: CustomColors.GreyBorder,
-                    blurRadius: 10.0,
-                    spreadRadius: 5.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              ),
-              child: Card(
-                elevation: 0,
-                color: Colors.transparent,
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Text(
-                        '1394QS',
-                        style: TextStyle(color: CustomColors.TextGrey),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Fábrica Campinas Unidade II Centro',
-                        style: TextStyle(
-                          color: CustomColors.TextHeader,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.remove_red_eye,
-                        color: CustomColors.TextHeaderGrey,
-                      ),
-                      tooltip: 'Visualizar',
-                      onPressed: () {},
-                      color: Colors.blue,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: CustomColors.TextHeaderGrey,
-                      ),
-                      tooltip: 'Opções',
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
             
             Container(
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   stops: [0.015, 0.015],
-                  colors: [CustomColors.BlueIcon, Colors.white],
+                  colors: [Colors.green, Colors.white],
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -176,9 +70,9 @@ class _HomeState extends State<Home> {
                 child: Row(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
                       child: Text(
-                        '7260KP',
+                        '5429WS',
                         style: TextStyle(color: CustomColors.TextGrey),
                       ),
                     ),
@@ -191,13 +85,26 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    IconButton(
+                    PopupMenuButton(
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
+                        const PopupMenuItem<Choice>(
+                          value: Choice.visualizar,
+                          child: Text('Visualizar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.editar,
+                          child: Text('Editar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.apagar,
+                          child: Text('Apagar'),
+                        ),
+                      ],
+                      tooltip: 'Opções',
                       icon: Icon(
                         Icons.more_vert,
                         color: CustomColors.TextHeaderGrey,
                       ),
-                      tooltip: 'Opções',
-                      onPressed: () {},
                     ),
                   ],
                 ),
@@ -209,7 +116,7 @@ class _HomeState extends State<Home> {
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   stops: [0.015, 0.015],
-                  colors: [CustomColors.BlueIcon, Colors.white],
+                  colors: [Colors.green, Colors.white],
                 ),
                 boxShadow: [
                   BoxShadow(
@@ -226,7 +133,7 @@ class _HomeState extends State<Home> {
                 child: Row(
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
                       child: Text(
                         '7260KP',
                         style: TextStyle(color: CustomColors.TextGrey),
@@ -234,20 +141,96 @@ class _HomeState extends State<Home> {
                     ),
                     Expanded(
                       child: Text(
-                        'Piscina Fazendinha Nóbrega II ',
+                        'Fábrica Campinas Unidade II',
                         style: TextStyle(
                           color: CustomColors.TextHeader,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                    IconButton(
+                    PopupMenuButton(
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
+                        const PopupMenuItem<Choice>(
+                          value: Choice.visualizar,
+                          child: Text('Visualizar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.editar,
+                          child: Text('Editar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.apagar,
+                          child: Text('Apagar'),
+                        ),
+                      ],
+                      tooltip: 'Opções',
                       icon: Icon(
                         Icons.more_vert,
                         color: CustomColors.TextHeaderGrey,
                       ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            Container(
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  stops: [0.015, 0.015],
+                  colors: [Colors.red, Colors.white],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: CustomColors.GreyBorder,
+                    blurRadius: 10.0,
+                    spreadRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              ),
+              child: Card(
+                elevation: 0,
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Text(
+                        '2451AB',
+                        style: TextStyle(color: CustomColors.TextGrey),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Fábrica Campinas Unidade I',
+                        style: TextStyle(
+                          color: CustomColors.TextHeader,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    PopupMenuButton(
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
+                        const PopupMenuItem<Choice>(
+                          value: Choice.visualizar,
+                          child: Text('Visualizar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.editar,
+                          child: Text('Editar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.apagar,
+                          child: Text('Apagar'),
+                        ),
+                      ],
                       tooltip: 'Opções',
-                      onPressed: () {},
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
                     ),
                   ],
                 ),

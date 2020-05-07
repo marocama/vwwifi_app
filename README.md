@@ -62,3 +62,24 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
     > Draggable (arrastar widgets)
 
     > Stack (verificar pra que serve)
+
+# Protocolo Transmissor
+   
+  {
+    "numero serial": "1234AA",
+    "quantidade de entradas": 2,
+    "quantidade de saidas": 3,
+    "entradas": {
+      "e1": 0,
+      "e2": 1
+    }
+    "saidas": {
+      "s1": 1,
+      "s2": 1,
+      "s3": 0
+    }
+    "outros": {
+      "nome": "valor",
+      "nome": "valor"
+    }
+  }
