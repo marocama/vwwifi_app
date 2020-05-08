@@ -8,10 +8,9 @@ class Transmitter extends StatefulWidget {
   _TransmitterState createState() => _TransmitterState();
 }
 
-enum Choice { visualizar, editar, apagar }
-
 class _TransmitterState extends State<Transmitter> {
   int _count = 0;
+  bool _s1 = false, _s2 = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +54,7 @@ class _TransmitterState extends State<Transmitter> {
                     subtitle: Row(
                       children: <Widget>[
                         Icon(Icons.autorenew, size: 15, color: Colors.grey,),
-                        Text(' Últ. Pacote: 07/05/20 15:57'),
+                        Text(' Últ. Pacote: 08/05/20 15:57'),
                       ],
                     ), 
                   ),
@@ -69,83 +68,73 @@ class _TransmitterState extends State<Transmitter> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.chevron_right, color: CustomColors.TextHeaderGrey),
+                        Text('SAÍDAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                        Spacer(),
+                        Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey, size: 18),
+                      ],
+                    ), 
+                  ),
                   ListTile(
-                    leading: Icon(Icons.power_settings_new, color: Colors.green, size: 35),
-                    title: Text('Bomba de Água'),
+                    leading: Icon(Icons.power_settings_new, color: _s1 ? Colors.green : Colors.grey, size: 35),
+                    title: Text('Toldo', style: TextStyle(fontWeight: FontWeight.w600)),
                     subtitle: Text('Saída 1'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    dense: true,
+                    onTap: () => setState(() => _s1 = !_s1),
                   ),
                   Divider(height: 1),
                   ListTile(
-                    leading: Icon(Icons.power_settings_new, color: Colors.green, size: 35),
-                    title: Text('Toldo'),
+                    leading: Icon(Icons.power_settings_new, color: _s2 ? Colors.green : Colors.grey, size: 35),
+                    title: Text('Aspirador', style: TextStyle(fontWeight: FontWeight.w600)),
                     subtitle: Text('Saída 2'),
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                    dense: true,
+                    onTap: () => setState(() => _s2 = !_s2),
                   ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.power_settings_new, color: Colors.grey, size: 28),
-                    title: Text('Aspirador'),
-                    subtitle: Text('Saída 3'),
-                  ),
+                  
                 ],
               ),
             ),
-
+            
             Card(
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               elevation: 10,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.chevron_right, color: CustomColors.TextHeaderGrey,),
+                        Text('ENTRADAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                        Spacer(),
+                        Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey, size: 18),
+                      ],
+                    ), 
+                  ),
                   ListTile(
-                    leading: Icon(Icons.radio_button_unchecked, color: Colors.orange, size: 35),
-                    title: Text('Sensor de Fumaça'),
+                    leading: Icon(Icons.remove_circle, color: Colors.green, size: 35),
+                    title: Text('Sensor de Luminosidade'),
                     subtitle: Text('Entrada 1'),
+                    dense: true,
                   ),
                   Divider(height: 1),
                   ListTile(
-                    leading: Icon(Icons.radio_button_checked, color: Colors.orange, size: 35),
+                    leading: Icon(Icons.remove_circle_outline, color: Colors.grey, size: 35),
                     title: Text('Sensor de Chuva'),
                     subtitle: Text('Entrada 2'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.trip_origin, color: Colors.orange, size: 35),
-                    title: Text('Sensor de Chuva'),
-                    subtitle: Text('Entrada 2'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.power_settings_new, color: Colors.orange, size: 35),
-                    title: Text('Sensor de Chuva'),
-                    subtitle: Text('Entrada 2'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.lens, color: Colors.orange, size: 35),
-                    title: Text('Sensor de Chuva'),
-                    subtitle: Text('Entrada 2'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.flash_on, color: Colors.orange, size: 35),
-                    title: Text('Sensor de Chuva'),
-                    subtitle: Text('Entrada 2'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.flash_off, color: Colors.orange, size: 35),
-                    title: Text('Sensor de Chuva'),
-                    subtitle: Text('Entrada 2'),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.power, color: Colors.orange, size: 35),
-                    title: Text('Sensor de Chuva'),
-                    subtitle: Text('Entrada 2'),
+                    dense: true,
                   ),
                 ],
               ),
             ),
+
 
             Card(
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
@@ -153,10 +142,54 @@ class _TransmitterState extends State<Transmitter> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
+                    child: Row(
+                      children: <Widget>[
+                        Icon(Icons.chevron_right, color: CustomColors.TextHeaderGrey,),
+                        Text('OUTROS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                        Spacer(),
+                        Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey, size: 18),
+                      ],
+                    ), 
+                  ),
                   ListTile(
-                    leading: Text('57%', style: TextStyle(color: Colors.blue, fontSize: 28)),
-                    title: Text('Nível da Caixa Principal'),
+                    leading: FractionallySizedBox(
+                      widthFactor: 0.25,
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            text: '1024',
+                            style: TextStyle(color: Colors.blue, fontSize: 22),
+                            children: <TextSpan>[
+                              TextSpan(text: ' cm', style: TextStyle(color: Colors.blue, fontSize: 12),)
+                            ]
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: Text('Potênciometro Portão'),
+                    subtitle: Text('Analógica 2'),
+                    dense: true,
+                  ),
+                  ListTile(
+                    leading: FractionallySizedBox(
+                      widthFactor: 0.25,
+                      child: Center(
+                        child: RichText(
+                          text: TextSpan(
+                            text: '57',
+                            style: TextStyle(color: Colors.blue, fontSize: 22),
+                            children: <TextSpan>[
+                              TextSpan(text: ' %', style: TextStyle(color: Colors.blue, fontSize: 12),)
+                            ]
+                          ),
+                        ),
+                      ),
+                    ),
+                    title: Text('Nível Caixa Principal'),
                     subtitle: Text('Analógica 1'),
+                    dense: true,
                   ),
                 ],
               ),

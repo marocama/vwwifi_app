@@ -69,6 +69,7 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
 ```
   {
     "numero serial": "1234AA",
+    "timestamp": "2020-
     "quantidade de entradas": 2,
     "quantidade de saidas": 3,
     "entradas": {
@@ -81,6 +82,14 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
       "s3": 0
     }
     "outros": {
+      {
+        "a1": 742,
+        "symbol": ""
+      }
+      {
+        "temp": 28,
+        "symbol": "°C"
+      }
       "nome": "valor",
       "nome": "valor"
     }
@@ -107,6 +116,7 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
 ```
 
 # Ferramentas
+    > Rotina de empacotamento de informações no protocolo definido, passando por parametro os valores especiais como analogica
     > Rotina padrão para as principais placas para implementação a cada X tempo, onde:
        > A rotina varreza as entradas, saídas e analógica e enviará tais informações pela serial, seguindo o protocolo padrão de comunicação
           > Inicialmente rotina pública para CLP PIC 40, CLP PIC 28
@@ -117,3 +127,9 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
     > Ferramentas presentas na plataforma VW IoT:
         > Recurso de Operadores
         > Meios de Contato
+
+https://medium.com/@agungsurya/create-a-simple-animated-floatingactionbutton-in-flutter-2d24f37cfbcc
+
+https://medium.com/@anilcan/forms-in-flutter-6e1364eafdb5
+
+https://github.com/flutter/samples/blob/master/provider_shopper/lib/screens/login.dart
