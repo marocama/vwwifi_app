@@ -65,6 +65,8 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
 
 # Protocolo Transmissor
    
+## Envio de dados para nuvem
+```
   {
     "numero serial": "1234AA",
     "quantidade de entradas": 2,
@@ -83,3 +85,35 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
       "nome": "valor"
     }
   }
+```
+## Envio de comandos online
+```
+    {
+      "numero serial": "1234AA",
+      "comando aplicativo": codigo (estabelecido de acordo com a placa),
+    }
+```
+```
+    {
+      "numero serial": "1234AA",
+      "comando plataforma": codigo (estabelecido de acordo com a placa),
+    }
+```
+```
+    {
+      "numero serial": "1234AA",
+      "horario": "07/05/20 23:08",
+    }
+```
+
+# Ferramentas
+    > Rotina padrão para as principais placas para implementação a cada X tempo, onde:
+       > A rotina varreza as entradas, saídas e analógica e enviará tais informações pela serial, seguindo o protocolo padrão de comunicação
+          > Inicialmente rotina pública para CLP PIC 40, CLP PIC 28
+          > Rotina interna para CLP Touch
+    > Rotina pública para solicitação do horário atual para o transmissor
+
+# Avaliar
+    > Ferramentas presentas na plataforma VW IoT:
+        > Recurso de Operadores
+        > Meios de Contato
