@@ -20,8 +20,8 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
     > ID
     > Número Serial
     > Identificador
-    > Localização
-    > Permissão 
+    * Localização
+    > Permissão (ativo ou expirado) 
     > ID do proprietário
     > Interface e Máscara de leitura
     > Interface e Máscara de envio

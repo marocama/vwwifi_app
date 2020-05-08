@@ -25,7 +25,12 @@ class _TransmitterState extends State<Transmitter> {
           Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.0),
-            child: Icon(Icons.account_circle, size: 28, semanticLabel: 'Usuário'),
+            child: CircleAvatar(
+              child: ClipOval(
+                child: Image.network("https://lh3.googleusercontent.com/proxy/bAKEnu9zmNebwYobri9F_gBO3rm8qacKoA9PdokbPKjDO0PiC3EykzmzkxyUp-Z_sploQkks7JIjH9jbLsZjuGO24RkQtsQqwlRhsgqtWM79jg")
+                ),
+              ),
+            ),
           ),
         ],
       ),
