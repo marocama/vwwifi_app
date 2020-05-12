@@ -16,6 +16,18 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
 
     > Quando for ler, é possível visualizar a resposta bruta, ou importar uma estilização pré definida
 
+# Telas
+    [ ] Splash
+    [ ] Login
+    [ ] Cadastro
+    [ ] Lista de Transmissores
+    [ ] Novo Transmissor
+    [ ] Editar Transmissor
+    [ ] Apagar Transmissor
+    [ ] Visualizar Transmissor
+    [ ] Enviar Comando
+    [ ] Perfil
+
 # Cadastro de transmissor
     > ID
     > Número Serial

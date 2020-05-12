@@ -12,24 +12,55 @@ class _TransmitterState extends State<Transmitter> {
   int _count = 0;
   bool _s1 = false, _s2 = false;
 
+  Future _sendCommand() async {
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          content: TextField(
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: "{\n\t\t\"porta\": \"valor\"\n}",
+              labelText: 'Enviar Comando',
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderSide: BorderSide(color: Colors.indigo)
+              ),
+            ),
+            minLines: 3,
+            maxLines: 5,
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Enviar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
 
       appBar: AppBar(
         leading: Container(
-          margin: EdgeInsets.only(left: 20.0),
+          margin: EdgeInsets.only(left: 20),
           child: Image.asset('assets/images/logoVW.png'),
         ),
         title: Text('VW Soluções'),
         actions: <Widget>[
           Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            padding: EdgeInsets.fromLTRB(20, 10, 25, 10),
             child: CircleAvatar(
-              child: ClipOval(
-                child: Image.network("https://lh3.googleusercontent.com/proxy/bAKEnu9zmNebwYobri9F_gBO3rm8qacKoA9PdokbPKjDO0PiC3EykzmzkxyUp-Z_sploQkks7JIjH9jbLsZjuGO24RkQtsQqwlRhsgqtWM79jg")
-                ),
-              ),
+              backgroundImage: NetworkImage("https://cdn-ofuxico.akamaized.net/img/upload/noticias/2019/06/19/bruna_marquezine_reproducao_instagram_351888_36.jpg"),
+              radius: 18,
             ),
           ),
         ],
@@ -206,7 +237,7 @@ class _TransmitterState extends State<Transmitter> {
       ), 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => _count++),
+        onPressed: () { _sendCommand(); },
         tooltip: 'Enviar',
         backgroundColor: Colors.orange,
         child: const Icon(Icons.send),
