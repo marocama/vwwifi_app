@@ -11,7 +11,7 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
 
     > Ao selecionar um transmissor cadastrado, é possível enviar ou ler dados
 
-    > Quando for enviar, é possível enviar uma string como quaisquer argumentos,
+    > Quando for enviar, é possível enviar uma string com quaisquer argumentos,
       criar botões definindo sua string ou importar botões pré definidos 
 
     > Quando for ler, é possível visualizar a resposta bruta, ou importar uma estilização pré definida

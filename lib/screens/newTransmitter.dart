@@ -16,11 +16,7 @@ class _InsertTransmitterState extends State<InsertTransmitter> {
     return Scaffold(
 
       appBar: AppBar(
-        leading: Container(
-          margin: EdgeInsets.only(left: 20.0),
-          child: Image.asset('assets/images/logoVW.png'),
-        ),
-        title: Text('VW Soluções'),
+        title: Text('Novo Transmissor'),
         actions: <Widget>[
           Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
           Padding(
@@ -100,13 +96,6 @@ class _InsertTransmitterState extends State<InsertTransmitter> {
           ],
         ),
       ), 
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => _count++),
-        tooltip: 'Enviar',
-        backgroundColor: Colors.orange,
-        child: const Icon(Icons.memory),
-      ),
     );
   }
 }

@@ -11,7 +11,6 @@ class Home extends StatefulWidget {
 enum Choice { visualizar, editar, apagar }
 
 class _HomeState extends State<Home> {
-  int _count = 0;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,6 +85,18 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     PopupMenuButton(
+                      onSelected: (Choice result) {
+                        switch (result) {
+                          case Choice.visualizar:
+                            Navigator.pushNamed(context, "/transmitter");
+                            break;
+                          case Choice.editar:
+                            Navigator.pushNamed(context, "/home");
+                            break;
+                          case Choice.apagar:
+                            break;
+                        }
+                      },
                       itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
                         const PopupMenuItem<Choice>(
                           value: Choice.visualizar,
@@ -243,7 +254,7 @@ class _HomeState extends State<Home> {
       ), 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => _count++),
+        onPressed: () { Navigator.pushNamed(context, "/new"); },
         tooltip: 'Registrar transmissor',
         child: const Icon(Icons.add),
       ),

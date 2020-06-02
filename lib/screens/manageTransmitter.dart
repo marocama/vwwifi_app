@@ -9,27 +9,23 @@ class Transmitter extends StatefulWidget {
 }
 
 class _TransmitterState extends State<Transmitter> {
-  int _count = 0;
   bool _s1 = false, _s2 = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
 
       appBar: AppBar(
-        leading: Container(
-          margin: EdgeInsets.only(left: 20.0),
-          child: Image.asset('assets/images/logoVW.png'),
-        ),
-        title: Text('VW Soluções'),
         actions: <Widget>[
-          Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
+          Icon(Icons.help, size: 32, semanticLabel: 'Ajuda'),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: CircleAvatar(
-              child: ClipOval(
-                child: Image.network("https://lh3.googleusercontent.com/proxy/bAKEnu9zmNebwYobri9F_gBO3rm8qacKoA9PdokbPKjDO0PiC3EykzmzkxyUp-Z_sploQkks7JIjH9jbLsZjuGO24RkQtsQqwlRhsgqtWM79jg")
-                ),
+              child: //Text("MR", style: TextStyle(color: Colors.white)), 
+                     ClipOval(
+                child: Image.network("https://i.pinimg.com/originals/49/c1/66/49c166b42c291e1cf2b90e1c38fb13f0.jpg"),
               ),
+              backgroundColor: Colors.black45,
+              radius: 18,
             ),
           ),
         ],
@@ -199,6 +195,10 @@ class _TransmitterState extends State<Transmitter> {
                 ],
               ),
             ),
+
+            ExpansionTile(
+              title: Text("EXPANSAO"),
+            ),
             
             SizedBox(height: 80),
           ],
@@ -206,7 +206,7 @@ class _TransmitterState extends State<Transmitter> {
       ), 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() => _count++),
+        onPressed: () { Navigator.pushNamed(context, "/send"); },
         tooltip: 'Enviar',
         backgroundColor: Colors.orange,
         child: const Icon(Icons.send),

@@ -15,11 +15,6 @@ class _SendCommandState extends State<SendCommand> {
     return Scaffold(
 
       appBar: AppBar(
-        leading: Container(
-          margin: EdgeInsets.only(left: 20.0),
-          child: Image.asset('assets/images/logoVW.png'),
-        ),
-        title: Text('VW Soluções'),
         actions: <Widget>[
           Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
           Padding(
