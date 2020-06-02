@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
                             Navigator.pushNamed(context, "/transmitter");
                             break;
                           case Choice.editar:
-                            Navigator.pushNamed(context, "/home");
+                            Navigator.pushNamed(context, "/profile");
                             break;
                           case Choice.apagar:
                             break;

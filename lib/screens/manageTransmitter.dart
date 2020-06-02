@@ -11,6 +11,39 @@ class Transmitter extends StatefulWidget {
 class _TransmitterState extends State<Transmitter> {
   bool _s1 = false, _s2 = false;
 
+  Future _sendCommand() async {
+    await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          content: TextField(
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: "{\n\t\t\"porta\": \"valor\"\n}",
+              labelText: 'Enviar Comando',
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderSide: BorderSide(color: Colors.indigo)
+              ),
+            ),
+            minLines: 3,
+            maxLines: 5,
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Enviar'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      }
+    );
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -18,13 +51,9 @@ class _TransmitterState extends State<Transmitter> {
         actions: <Widget>[
           Icon(Icons.help, size: 32, semanticLabel: 'Ajuda'),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
+            padding: EdgeInsets.fromLTRB(20, 10, 25, 10),
             child: CircleAvatar(
-              child: //Text("MR", style: TextStyle(color: Colors.white)), 
-                     ClipOval(
-                child: Image.network("https://i.pinimg.com/originals/49/c1/66/49c166b42c291e1cf2b90e1c38fb13f0.jpg"),
-              ),
-              backgroundColor: Colors.black45,
+              backgroundImage: NetworkImage("https://cdn-ofuxico.akamaized.net/img/upload/noticias/2019/06/19/bruna_marquezine_reproducao_instagram_351888_36.jpg"),
               radius: 18,
             ),
           ),

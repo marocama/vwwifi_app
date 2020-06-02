@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vwwifi/screens/listTransmitters.dart';
 import 'package:vwwifi/screens/manageTransmitter.dart';
 import 'package:vwwifi/screens/newTransmitter.dart';
+import 'package:vwwifi/screens/profile.dart';
 import 'package:vwwifi/screens/sendCommand.dart';
 
 void main() => runApp(
@@ -16,7 +17,8 @@ void main() => runApp(
         "/transmitter" : (context) => Transmitter(),
         "/home"        : (context) => Home(),
         "/new"         : (context) => InsertTransmitter(),
-        "/send"        : (context) => SendCommand(), 
+        "/send"        : (context) => SendCommand(),
+        "/profile"     : (context) => Profile(), 
     },
   )
 );
