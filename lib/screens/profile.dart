@@ -12,21 +12,80 @@ class _ProfileState extends State<Profile> {
   bool _showPassword = false;
 
   Widget build(BuildContext context) {
+
+    Future<void> _equipament() async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            //title:  Text('Equipamentos', style: TextStyle(fontSize: 16)),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+
+                  ListTile(
+                    title: Text("Convidados:"),
+                    subtitle: RichText(
+                      text: TextSpan(
+                        style: TextStyle(color: CustomColors.TextHeaderGrey),
+                        children: <TextSpan> [
+                          TextSpan(text: '2', style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: ' em uso | '),
+                          TextSpan(text: '1', style: TextStyle(fontWeight: FontWeight.bold)),
+                          TextSpan(text: ' livre'),
+                        ],
+                      ),
+                    ),
+                    trailing: Icon(Icons.supervised_user_circle),
+                  ),
+                  ListTile(
+                    title: Text("Vencimento:"),
+                    subtitle: Text("30/06/2020", style: TextStyle(color: CustomColors.TextHeaderGrey)),
+                    trailing: Icon(Icons.payment),
+                  ),
+                  
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () { Navigator.of(context).pop(); }, 
+                child: Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
+    Future<void> _help() async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            //title:  Text('Ajuda', style: TextStyle(fontSize: 16)),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Text("Consulte nosso site."),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () { Navigator.of(context).pop(); },
+                child: Text("IR"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
 
       appBar: AppBar(
-        leading: Container(
-          margin: EdgeInsets.only(left: 20.0),
-          child: Image.asset('assets/images/logoVW.png'),
-        ),
-        title: Text('VW Soluções'),
-        actions: <Widget>[
-          Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
-            child: Icon(Icons.account_circle, size: 28, semanticLabel: 'Usuário'),
-          ),
-        ],
+        title: Text("Perfil"),
       ),
 
       body: Container(
@@ -35,8 +94,6 @@ class _ProfileState extends State<Profile> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
-            
-            
             Row(
               children: <Widget>[
                 Stack(
@@ -59,7 +116,7 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(left: 20),
-                      child: Text("Marcus Roberto", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                      child: Text("Vinagrete da Silva", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 20),
@@ -71,129 +128,28 @@ class _ProfileState extends State<Profile> {
             ),
             
             SizedBox(height: 10),
-            Divider(thickness: 2, indent: 4, endIndent: 4),
 
-            
-            SizedBox(height: 10),
-            Card(
-              elevation: 10,
-              child: ExpansionTile(
-                title: Text("▪  Status e Pagamentos"),
-                children: <Widget>[
-                  ListTile(
-                    title: RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.black87),
-                        children: <TextSpan> [
-                          TextSpan(text: '1', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: ' de '),
-                          TextSpan(text: '3', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: ' transmissores ativos'),
-                        ],
-                      ),
-                    ),
-                    subtitle: Text("Próx. Vencimento: 30/05/2020"),
-                    trailing: Icon(Icons.payment),
-                  ),
-                  ListTile(
-                    title: RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.black87),
-                        children: <TextSpan> [
-                          TextSpan(text: 'Logado em: '),
-                          TextSpan(text: 'Administrador', style: TextStyle(fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    subtitle: RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.black87),
-                        children: <TextSpan> [
-                          TextSpan(text: 'Convidados: '),
-                          TextSpan(text: '2', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: ' em uso | '),
-                          TextSpan(text: '1'),
-                          TextSpan(text: ' livre', style: TextStyle(fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    trailing: Icon(Icons.account_circle),
-                  ),
-                ],
-              ),
+            Divider(thickness: 1),
+
+            ListTile(
+              leading: Icon(Icons.vpn_key, color: Colors.blue[500]),
+              title: Text("Conta"),
+              subtitle: Text("Informações de contato, senha"),
+              onTap: () { Navigator.pushNamed(context, "/account"); },
+            ),
+            ListTile(
+              leading: Icon(Icons.developer_board, color: Colors.blue[500]),
+              title: Text("Equipamentos"),
+              subtitle: Text("Utilização, convidados, vencimentos"),
+              onTap: _equipament,
+            ),
+            ListTile(
+              leading: Icon(Icons.help_outline, color: Colors.blue[500]),
+              title: Text("Ajuda"),
+              subtitle: Text("Guia, fale conosco, termos"),
+              onTap: _help,
             ),
             
-
-            Card(
-              elevation: 10,
-              child: ExpansionTile(
-                title: Text("▪  Informações Gerais"),
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Nome Completo', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "Marcus Roberto",
-                          style: TextStyle(fontSize:15),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Email', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "marcus.rcm@outlook.com",
-                          style: TextStyle(fontSize:15),
-                          enabled: false,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'CPF/CNPJ', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "429.759.388-29",
-                          style: TextStyle(fontSize:15),
-                          enabled: false,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Celular', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "(35) 99868-1301",
-                          style: TextStyle(fontSize:15),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'CEP', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "12.990-000",
-                          style: TextStyle(fontSize:15),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Senha', suffixIcon: GestureDetector(child: Icon(Icons.remove_red_eye), onTap: () => setState(() { _showPassword = !_showPassword; })), labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "vwsolucoes123",
-                          style: TextStyle(fontSize:15),
-                          obscureText: _showPassword,
-                        ),
-                        SizedBox(height: 10),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            onPressed: () {},
-                            color: Colors.indigo,
-                            textColor: Colors.white,
-                            child: Text("SALVAR"),
-                          ),
-                        ),
-                        
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            Card(
-              elevation: 10,
-              child: ExpansionTile(
-                title: Text("▪  Ajuda e Contato"),
-                children: <Widget>[
-                  Text("Para mais informações, consulte nosso site."),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
             
             SizedBox(height: 80),
           ],

@@ -14,7 +14,6 @@ class _HomeState extends State<Home> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         leading: Container(
           margin: EdgeInsets.only(left: 20.0),
@@ -70,19 +69,10 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Text(
-                        '5429WS',
-                        style: TextStyle(color: CustomColors.TextGrey),
-                      ),
+                      child: Text('5429WS', style: TextStyle(color: CustomColors.TextSubHeaderGrey, fontWeight: FontWeight.w600)),
                     ),
                     Expanded(
-                      child: Text(
-                        'Piscina Fazenda',
-                        style: TextStyle(
-                          color: CustomColors.TextHeader,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: Text('PISCINA FAZENDA', style: TextStyle(color: CustomColors.TextHeader, fontWeight: FontWeight.w800)),
                     ),
                     PopupMenuButton(
                       onSelected: (Choice result) {
@@ -94,6 +84,7 @@ class _HomeState extends State<Home> {
                             Navigator.pushNamed(context, "/profile");
                             break;
                           case Choice.apagar:
+                            Navigator.pushNamed(context, "/login");
                             break;
                         }
                       },
@@ -145,18 +136,10 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Text(
-                        '7260KP',
-                        style: TextStyle(color: CustomColors.TextGrey),
-                      ),
+                      child: Text('7260KP', style: TextStyle(color: CustomColors.TextSubHeaderGrey, fontWeight: FontWeight.w600)),
                     ),
                     Expanded(
-                      child: Text(
-                        'Fábrica Campinas Unidade II',
-                        style: TextStyle(
-                          color: CustomColors.TextHeader,
-                          fontWeight: FontWeight.w600,
-                        ),
+                      child: Text('FÁBRICA CAMPINAS UNIDADE II', style: TextStyle(color: CustomColors.TextHeader, fontWeight: FontWeight.w800),
                       ),
                     ),
                     PopupMenuButton(
@@ -208,19 +191,10 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Text(
-                        '2451AB',
-                        style: TextStyle(color: CustomColors.TextGrey),
-                      ),
+                      child: Text('2451AB', style: TextStyle(color: CustomColors.TextSubHeaderGrey, fontWeight: FontWeight.w600)),
                     ),
                     Expanded(
-                      child: Text(
-                        'Fábrica Campinas Unidade I',
-                        style: TextStyle(
-                          color: CustomColors.TextHeader,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                      child: Text('FÁBRICA CAMPINAS UNIDADE I', style: TextStyle(color: CustomColors.TextHeader, fontWeight: FontWeight.w800)),
                     ),
                     PopupMenuButton(
                       itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[

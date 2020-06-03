@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "759968030173",
+    "firebase_url": "https://vwiot77.firebaseio.com",
+    "project_id": "vwiot77",
+    "storage_bucket": "vwiot77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:759968030173:android:c5cb9470df089f9c26ea34",
+        "android_client_info": {
+          "package_name": "com.vwsolucoes.marcus.roberto.vwwifi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "759968030173-4tck22rgvbofa3cva56k5tundgnk1i9p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9yomeRDDIdEpchaqX5MRKocNxAlleXIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "759968030173-4tck22rgvbofa3cva56k5tundgnk1i9p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

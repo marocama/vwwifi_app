@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
+import 'package:vwwifi/screens/account.dart';
 import 'package:vwwifi/screens/listTransmitters.dart';
+import 'package:vwwifi/screens/login.dart';
 import 'package:vwwifi/screens/manageTransmitter.dart';
 import 'package:vwwifi/screens/newTransmitter.dart';
 import 'package:vwwifi/screens/profile.dart';
@@ -19,6 +22,8 @@ void main() => runApp(
         "/new"         : (context) => InsertTransmitter(),
         "/send"        : (context) => SendCommand(),
         "/profile"     : (context) => Profile(), 
+        "/account"     : (context) => Account(),
+        "/login"       : (context) => Login(),
     },
   )
 );

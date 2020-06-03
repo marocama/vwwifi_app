@@ -8,45 +8,13 @@ class Transmitter extends StatefulWidget {
   _TransmitterState createState() => _TransmitterState();
 }
 
+enum Choice { visualizar, editar, apagar }
+
 class _TransmitterState extends State<Transmitter> {
   bool _s1 = false, _s2 = false;
 
-  Future _sendCommand() async {
-    await showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          contentPadding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-          content: TextField(
-            autofocus: true,
-            decoration: InputDecoration(
-              hintText: "{\n\t\t\"porta\": \"valor\"\n}",
-              labelText: 'Enviar Comando',
-              filled: true,
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                borderSide: BorderSide(color: Colors.indigo)
-              ),
-            ),
-            minLines: 3,
-            maxLines: 5,
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Enviar'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      }
-    );
-  }
-
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         actions: <Widget>[
           Icon(Icons.help, size: 32, semanticLabel: 'Ajuda'),
@@ -65,50 +33,70 @@ class _TransmitterState extends State<Transmitter> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
-
-            Card(
+            
+            Container(
               margin: EdgeInsets.fromLTRB(20, 15, 20, 15),
-              elevation: 10,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  ListTile(
-                    title: Row(
-                      children: <Widget>[
-                        Icon(Icons.memory, size: 15, color: CustomColors.TextHeaderGrey),
-                        Text(' 2451AB', style: TextStyle(fontSize: 15, color: CustomColors.TextHeaderGrey, fontWeight: FontWeight.w800)),
-                        Text(' - '),
-                        Text('Piscina Fazenda', style: TextStyle(fontSize: 15, color: CustomColors.TextHeader, fontWeight: FontWeight.w600)),
-                      ],
-                    ),
-                    subtitle: Row(
-                      children: <Widget>[
-                        Icon(Icons.autorenew, size: 15, color: Colors.grey,),
-                        Text(' Últ. Pacote: 08/05/20 15:57'),
-                      ],
-                    ), 
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  stops: [0.015, 0.015],
+                  colors: [Colors.green, Colors.white],
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: CustomColors.GreyBorder,
+                    blurRadius: 10.0,
+                    spreadRadius: 5.0,
                   ),
                 ],
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+              ),
+              child: Card(
+                elevation: 0,
+                color: Colors.transparent,
+                child: Row(
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.0),
+                      child: Text('2451AB', style: TextStyle(color: CustomColors.TextSubHeaderGrey, fontWeight: FontWeight.w600)),
+                    ),
+                    Expanded(
+                      child: Text('PISCINA FAZENDA', style: TextStyle(color: CustomColors.TextHeader, fontWeight: FontWeight.w800)),
+                    ),
+                    PopupMenuButton(
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
+                        const PopupMenuItem<Choice>(
+                          value: Choice.visualizar,
+                          child: Text('Visualizar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.editar,
+                          child: Text('Editar'),
+                        ),
+                        const PopupMenuItem<Choice>(
+                          value: Choice.apagar,
+                          child: Text('Apagar'),
+                        ),
+                      ],
+                      tooltip: 'Opções',
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: CustomColors.TextHeaderGrey,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
 
+
+
             Card(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               elevation: 10,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              child: ExpansionTile(
+                title: Text('SAÍDAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                //leading: Icon(Icons.power_settings_new, color: CustomColors.TextSubHeaderGrey),
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.chevron_right, color: CustomColors.TextHeaderGrey),
-                        Text('SAÍDAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                        Spacer(),
-                        Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey, size: 18),
-                      ],
-                    ), 
-                  ),
                   ListTile(
                     leading: Icon(Icons.power_settings_new, color: _s1 ? Colors.green : Colors.grey, size: 35),
                     title: Text('Toldo', style: TextStyle(fontWeight: FontWeight.w600)),
@@ -126,28 +114,17 @@ class _TransmitterState extends State<Transmitter> {
                     dense: true,
                     onTap: () => setState(() => _s2 = !_s2),
                   ),
-                  
                 ],
               ),
             ),
             
             Card(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               elevation: 10,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              child: ExpansionTile(
+                title: Text('ENTRADAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                //leading: Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey),
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.chevron_right, color: CustomColors.TextHeaderGrey,),
-                        Text('ENTRADAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                        Spacer(),
-                        Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey, size: 18),
-                      ],
-                    ), 
-                  ),
                   ListTile(
                     leading: Icon(Icons.remove_circle, color: Colors.green, size: 35),
                     title: Text('Sensor de Luminosidade'),
@@ -165,24 +142,13 @@ class _TransmitterState extends State<Transmitter> {
               ),
             ),
 
-
             Card(
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               elevation: 10,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
+              child: ExpansionTile(
+                title: Text('ANALÓGICAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                //leading: Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey),
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 10, 20, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(Icons.chevron_right, color: CustomColors.TextHeaderGrey,),
-                        Text('OUTROS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                        Spacer(),
-                        Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey, size: 18),
-                      ],
-                    ), 
-                  ),
                   ListTile(
                     leading: FractionallySizedBox(
                       widthFactor: 0.25,
@@ -223,10 +189,6 @@ class _TransmitterState extends State<Transmitter> {
                   ),
                 ],
               ),
-            ),
-
-            ExpansionTile(
-              title: Text("EXPANSAO"),
             ),
             
             SizedBox(height: 80),
