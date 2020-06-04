@@ -11,15 +11,16 @@ class _LoginState extends State<Login> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[900],
       appBar: AppBar(),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: ListView(
-          children: <Widget>[
-            //Image(image: AssetImage("assets/images/logoVW.png")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          
+          Image.asset("assets/images/logoVW.png", height: 120),
 
-            Card(
+          Padding(
+            padding: EdgeInsets.fromLTRB(15, 35, 15, 5),
+            child: Card(
               child: Container(
                 padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
                 child: Column(
@@ -38,34 +39,36 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 4),
-              child: RaisedButton(
-                child: Text("LOGIN"),
-                color: Colors.blue[900],
-                textColor: Colors.white,
-                onPressed: () {},
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-              ),
-            ),
+          ),
 
-            Padding(
-              padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Text("Esqueci minha senha", textAlign: TextAlign.center, style: TextStyle(color: Colors.white)),
+          ButtonTheme(
+            minWidth: (MediaQuery.of(context).size.width - 35),
+            child: RaisedButton(
+              child: Text("LOGIN"),
+              color: Colors.blue[900],
+              textColor: Colors.white,
+              onPressed: () { Navigator.pushNamed(context, "/register"); },
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
             ),
-            
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("Não possui uma conta? ", style: TextStyle(color: Colors.white)),
-                Text("Registre-se", style: TextStyle(color: Colors.orange[700], fontWeight: FontWeight.w800)),
-              ],
-            ),
-            
+          ),
 
-            
-          ],
-        ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Text("Esqueci minha senha", textAlign: TextAlign.center, style: TextStyle(color: Colors.white)),
+          ),
+
+          RichText(
+            text: TextSpan(
+              style: TextStyle(color: Colors.white),
+              children: [
+                TextSpan(text: 'Não possui um conta? '),
+                TextSpan(text: 'Registre-se', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange[700])),
+              ]
+            ),
+          ),
+
+        ],
       ),
     );
   }

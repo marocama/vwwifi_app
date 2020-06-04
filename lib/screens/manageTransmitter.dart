@@ -14,10 +14,115 @@ class _TransmitterState extends State<Transmitter> {
   bool _s1 = false, _s2 = false;
 
   Widget build(BuildContext context) {
+
+    createNewMessage() {
+      return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return WillPopScope(
+                  onWillPop: () {
+                    return Future.value(true);
+                  },
+                  child: Material(
+                    child: Container(
+                      padding: const EdgeInsets.all(16.0),
+                      width: (MediaQuery.of(context).size.width/2),
+                      height: (MediaQuery.of(context).size.height/2),
+                      child: Column(
+                        children: <Widget>[
+                          new Text('?'),
+                          Container(
+                            height: 20,
+                          ),
+                          Container(
+                            height: 10,
+                          ),
+                          TextField(decoration: InputDecoration(labelText: "Data")),
+                          Container(
+                            height: 10,
+                          ),
+                          TextField(decoration: InputDecoration(labelText: "Hora")),
+                          Container(
+                            height: 10,
+                          ),
+                          TextField(
+                              decoration: InputDecoration(labelText: 'Mensagem')),
+                          Spacer(),
+                          Row(
+                            children: <Widget>[
+                              Spacer(),
+                              FlatButton(
+                                  child: Text('sendMessage'),
+                                  onPressed: () {}),
+                              FlatButton(
+                                  child: Text('closealert'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ));
+            },
+          );
+        },
+      );
+    }
+
+    Future<void> _rename() async {
+      return showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Saída 1', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontSize:15),
+                    initialValue: 'Toldo',
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Saída 2', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontSize:15),
+                    initialValue: 'Aspirador',
+                  ),
+                  TextFormField(
+                    decoration: InputDecoration(labelText: 'Entrada 1', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontSize:15),
+                    initialValue: 'Sensor de Luminosidade',
+                  ),
+                ],
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                onPressed: () { Navigator.of(context).pop(); }, 
+                child: Text("CANCELAR"),
+              ),
+              FlatButton(
+                onPressed: () { Navigator.of(context).pop(); }, 
+                child: Text("SALVAR"),
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          Icon(Icons.help, size: 32, semanticLabel: 'Ajuda'),
+          GestureDetector(
+            child: Icon(Icons.edit, size: 28, semanticLabel: 'Renomear'),
+            onTap: () { Navigator.pushNamed(context, "/rename"); },
+          ),
+          
           Padding(
             padding: EdgeInsets.fromLTRB(20, 10, 25, 10),
             child: CircleAvatar(
@@ -41,13 +146,6 @@ class _TransmitterState extends State<Transmitter> {
                   stops: [0.015, 0.015],
                   colors: [Colors.green, Colors.white],
                 ),
-                boxShadow: [
-                  BoxShadow(
-                    color: CustomColors.GreyBorder,
-                    blurRadius: 10.0,
-                    spreadRadius: 5.0,
-                  ),
-                ],
                 borderRadius: BorderRadius.all(Radius.circular(4.0)),
               ),
               child: Card(
@@ -66,18 +164,19 @@ class _TransmitterState extends State<Transmitter> {
                       itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
                         const PopupMenuItem<Choice>(
                           value: Choice.visualizar,
-                          child: Text('Visualizar'),
+                          child: Text('Visualizar', style: TextStyle(color: Colors.white)),
                         ),
                         const PopupMenuItem<Choice>(
                           value: Choice.editar,
-                          child: Text('Editar'),
+                          child: Text('Editar', style: TextStyle(color: Colors.white)),
                         ),
                         const PopupMenuItem<Choice>(
                           value: Choice.apagar,
-                          child: Text('Apagar'),
+                          child: Text('Apagar', style: TextStyle(color: Colors.white)),
                         ),
                       ],
                       tooltip: 'Opções',
+                      color: Colors.grey[800],
                       icon: Icon(
                         Icons.more_vert,
                         color: CustomColors.TextHeaderGrey,
@@ -95,7 +194,6 @@ class _TransmitterState extends State<Transmitter> {
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               child: ExpansionTile(
                 title: Text('SAÍDAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                //leading: Icon(Icons.power_settings_new, color: CustomColors.TextSubHeaderGrey),
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.power_settings_new, color: _s1 ? Colors.green : Colors.grey, size: 35),
@@ -123,7 +221,6 @@ class _TransmitterState extends State<Transmitter> {
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               child: ExpansionTile(
                 title: Text('ENTRADAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                //leading: Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey),
                 children: <Widget>[
                   ListTile(
                     leading: Icon(Icons.remove_circle, color: Colors.green, size: 35),
@@ -147,7 +244,6 @@ class _TransmitterState extends State<Transmitter> {
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               child: ExpansionTile(
                 title: Text('ANALÓGICAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                //leading: Icon(Icons.edit, color: CustomColors.TextSubHeaderGrey),
                 children: <Widget>[
                   ListTile(
                     leading: FractionallySizedBox(

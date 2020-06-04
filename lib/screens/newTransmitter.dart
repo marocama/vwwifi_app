@@ -17,13 +17,6 @@ class _InsertTransmitterState extends State<InsertTransmitter> {
 
       appBar: AppBar(
         title: Text('Novo Transmissor'),
-        actions: <Widget>[
-          Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0),
-            child: Icon(Icons.account_circle, size: 28, semanticLabel: 'Usuário'),
-          ),
-        ],
       ),
 
       body: Container(
@@ -53,7 +46,7 @@ class _InsertTransmitterState extends State<InsertTransmitter> {
                 Icon(_transmitter ? Icons.wb_cloudy : Icons.cloud_off, color: Colors.grey),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Text(_transmitter ? 'Remoto' : 'Local', style: TextStyle(color: CustomColors.TextHeaderGrey)),
+                  child: Text(_transmitter ? 'Remoto' : 'Local', style: TextStyle(color: Colors.grey)),
                 ),
                 Spacer(),
                 Switch(
@@ -61,6 +54,7 @@ class _InsertTransmitterState extends State<InsertTransmitter> {
                   onChanged: (value) {
                     setState(() => _transmitter = !_transmitter);
                   },
+                  activeColor: Theme.of(context).accentColor,
                 ),
               ],
             ),
@@ -79,18 +73,11 @@ class _InsertTransmitterState extends State<InsertTransmitter> {
             Container(
               width: MediaQuery.of(context).size.width,
               child: RaisedButton(
-                child: Text(
-                  'Cadastrar',
-                  style: new TextStyle(
-                    color: Colors.white
-                  ),
-                ),
+                child: Text('Cadastrar'),
                 onPressed: () => null,
-                color: Colors.indigo,
+                color: Color(0xFF0D47A1),
               ),
-              margin: new EdgeInsets.only(
-                top: 20.0
-              ),
+              margin: EdgeInsets.only(top: 20),
             ),
             SizedBox(height: 80),
           ],
