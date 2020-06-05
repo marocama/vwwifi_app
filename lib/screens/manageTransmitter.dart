@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vwwifi/components/BoardCard.dart';
+import 'package:vwwifi/components/ExtensionCard.dart';
 import 'package:vwwifi/util.dart';
 
 class Transmitter extends StatefulWidget {
@@ -138,112 +140,20 @@ class _TransmitterState extends State<Transmitter> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
+
+            SizedBox(height: 15),
             
-            Container(
-              margin: EdgeInsets.fromLTRB(20, 15, 20, 15),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: [0.015, 0.015],
-                  colors: [Colors.green, Colors.white],
-                ),
-                borderRadius: BorderRadius.all(Radius.circular(4.0)),
-              ),
-              child: Card(
-                elevation: 0,
-                color: Colors.transparent,
-                child: Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 15.0),
-                      child: Text('2451AB', style: TextStyle(color: CustomColors.TextSubHeaderGrey, fontWeight: FontWeight.w600)),
-                    ),
-                    Expanded(
-                      child: Text('PISCINA FAZENDA', style: TextStyle(color: CustomColors.TextHeader, fontWeight: FontWeight.w800)),
-                    ),
-                    PopupMenuButton(
-                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Choice>>[
-                        const PopupMenuItem<Choice>(
-                          value: Choice.visualizar,
-                          child: Text('Visualizar', style: TextStyle(color: Colors.white)),
-                        ),
-                        const PopupMenuItem<Choice>(
-                          value: Choice.editar,
-                          child: Text('Editar', style: TextStyle(color: Colors.white)),
-                        ),
-                        const PopupMenuItem<Choice>(
-                          value: Choice.apagar,
-                          child: Text('Apagar', style: TextStyle(color: Colors.white)),
-                        ),
-                      ],
-                      tooltip: 'Opções',
-                      color: Colors.grey[800],
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: CustomColors.TextHeaderGrey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-
-
-            Card(
-              elevation: 10,
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-              child: ExpansionTile(
-                title: Text('SAÍDAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.power_settings_new, color: _s1 ? Colors.green : Colors.grey, size: 35),
-                    title: Text('Toldo', style: TextStyle(fontWeight: FontWeight.w600)),
-                    subtitle: Text('Saída 1'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    dense: true,
-                    onTap: () => setState(() => _s1 = !_s1),
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.power_settings_new, color: _s2 ? Colors.green : Colors.grey, size: 35),
-                    title: Text('Aspirador', style: TextStyle(fontWeight: FontWeight.w600)),
-                    subtitle: Text('Saída 2'),
-                    trailing: Icon(Icons.keyboard_arrow_right),
-                    dense: true,
-                    onTap: () => setState(() => _s2 = !_s2),
-                  ),
-                ],
-              ),
-            ),
+            BoardCard(),
             
-            Card(
-              elevation: 10,
-              margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
-              child: ExpansionTile(
-                title: Text('ENTRADAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
-                children: <Widget>[
-                  ListTile(
-                    leading: Icon(Icons.remove_circle, color: Colors.green, size: 35),
-                    title: Text('Sensor de Luminosidade'),
-                    subtitle: Text('Entrada 1'),
-                    dense: true,
-                  ),
-                  Divider(height: 1),
-                  ListTile(
-                    leading: Icon(Icons.remove_circle_outline, color: Colors.grey, size: 35),
-                    title: Text('Sensor de Chuva'),
-                    subtitle: Text('Entrada 2'),
-                    dense: true,
-                  ),
-                ],
-              ),
-            ),
+            ExtensionCard(),
+            
+            ExtensionCard(),
 
             Card(
               elevation: 10,
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               child: ExpansionTile(
-                title: Text('ANALÓGICAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                title: Text('ANALÓGICAS', style: TextStyle(fontWeight: FontWeight.w800)),
                 children: <Widget>[
                   ListTile(
                     leading: FractionallySizedBox(
@@ -296,7 +206,7 @@ class _TransmitterState extends State<Transmitter> {
         onPressed: () { Navigator.pushNamed(context, "/send"); },
         tooltip: 'Enviar',
         backgroundColor: Colors.orange,
-        child: const Icon(Icons.send),
+        child: const Icon(Icons.send, color: Colors.white),
       ),
     );
   }

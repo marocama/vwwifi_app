@@ -73,7 +73,7 @@ class _InsertTransmitterState extends State<InsertTransmitter> {
             Container(
               width: MediaQuery.of(context).size.width,
               child: RaisedButton(
-                child: Text('Cadastrar'),
+                child: Text('CADASTRAR', style: TextStyle(color: Colors.white)),
                 onPressed: () => null,
                 color: Color(0xFF0D47A1),
               ),

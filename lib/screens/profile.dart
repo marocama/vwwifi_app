@@ -27,7 +27,7 @@ class _ProfileState extends State<Profile> {
                     title: Text("Convidados:"),
                     subtitle: RichText(
                       text: TextSpan(
-                        style: TextStyle(color: CustomColors.TextHeaderGrey),
+                        style: TextStyle(color: Colors.grey),
                         children: <TextSpan> [
                           TextSpan(text: '2', style: TextStyle(fontWeight: FontWeight.bold)),
                           TextSpan(text: ' em uso | '),
@@ -40,7 +40,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                     title: Text("Vencimento:"),
-                    subtitle: Text("30/06/2020", style: TextStyle(color: CustomColors.TextHeaderGrey)),
+                    subtitle: Text("30/06/2020", style: TextStyle(color: Colors.grey)),
                     trailing: Icon(Icons.payment),
                   ),
                   
@@ -105,7 +105,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     CircleAvatar(
                       child: Icon(Icons.camera_alt, color: Colors.white, size: 18),
-                      backgroundColor: Colors.indigo,
+                      backgroundColor: Color(0xFF1472FF),
                       radius: 15,
                     ),
                   ],
@@ -118,32 +118,30 @@ class _ProfileState extends State<Profile> {
                       child: Text("Vinagrete da Silva", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20),
-                      child: Text("Administrador", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15, color: CustomColors.TextHeaderGrey)),
+                      padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
+                      child: Text("Administrador", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15, color: Colors.grey)),
                     ),
                   ],
                 ),
               ],
             ),
             
-            SizedBox(height: 10),
-
-            Divider(thickness: 1),
+            SizedBox(height: 25),
 
             ListTile(
-              leading: Icon(Icons.vpn_key, color: Colors.blue[500]),
+              leading: Icon(Icons.vpn_key, color: Color(0xFF1472FF)),
               title: Text("Conta"),
               subtitle: Text("Informações de contato, senha"),
               onTap: () { Navigator.pushNamed(context, "/account"); },
             ),
             ListTile(
-              leading: Icon(Icons.developer_board, color: Colors.blue[500]),
+              leading: Icon(Icons.developer_board, color: Color(0xFF1472FF)),
               title: Text("Equipamentos"),
               subtitle: Text("Utilização, convidados, vencimentos"),
               onTap: _equipament,
             ),
             ListTile(
-              leading: Icon(Icons.help_outline, color: Colors.blue[500]),
+              leading: Icon(Icons.help_outline, color: Color(0xFF1472FF)),
               title: Text("Ajuda"),
               subtitle: Text("Guia, fale conosco, termos"),
               onTap: _help,

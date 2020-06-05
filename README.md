@@ -20,13 +20,13 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
     [ ] Splash
     [X] Login
     [X] Cadastro
-    [X] Lista de Transmissores
-    [X] Novo Transmissor
+    [X] Lista de Transmissores *
+    [X] Novo Transmissor *
     [X] Editar Transmissor
     [X] Apagar Transmissor
     [X] Visualizar Transmissor
     [X] Enviar Comando
-    [X] Perfil
+    [X] Perfil *
 
 # Cadastro de transmissor
     > ID

@@ -9,7 +9,6 @@ class Rename extends StatefulWidget {
 }
 
 class _RenameState extends State<Rename> {
-  bool _showPassword = false;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +20,6 @@ class _RenameState extends State<Rename> {
           onTap: () { Navigator.pop(context); },
         ),
         actions: <Widget>[
-          
           Padding(
             padding: EdgeInsets.fromLTRB(20, 10, 25, 10),
             child: Icon(Icons.save),
@@ -40,7 +38,8 @@ class _RenameState extends State<Rename> {
               elevation: 10,
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               child: ExpansionTile(
-                title: Text('SAÍDAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                title: Text('SAÍDAS', style: TextStyle(fontWeight: FontWeight.w800)),
+                initiallyExpanded: true,
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -66,7 +65,7 @@ class _RenameState extends State<Rename> {
               elevation: 10,
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               child: ExpansionTile(
-                title: Text('ENTRADAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                title: Text('ENTRADAS', style: TextStyle(fontWeight: FontWeight.w800)),
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -92,7 +91,7 @@ class _RenameState extends State<Rename> {
               elevation: 10,
               margin: EdgeInsets.fromLTRB(20, 0, 20, 15),
               child: ExpansionTile(
-                title: Text('ANALÓGICAS', style: TextStyle(fontWeight: FontWeight.w800, color: CustomColors.TextHeaderGrey)),
+                title: Text('ANALÓGICAS', style: TextStyle(fontWeight: FontWeight.w800)),
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -113,18 +112,9 @@ class _RenameState extends State<Rename> {
                 ],
               ),
             ),
-            
-            SizedBox(height: 80),
           ],
         ),
       ), 
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.pushNamed(context, "/send"); },
-        tooltip: 'Enviar',
-        backgroundColor: Colors.orange,
-        child: const Icon(Icons.send),
-      ),
     );
   }
 }

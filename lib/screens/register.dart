@@ -50,7 +50,7 @@ class _RegisterState extends State<Register> {
                         padding: EdgeInsets.only(top: 25),
                         child: RichText(
                           text: TextSpan(
-                            style: TextStyle(color: CustomColors.TextHeaderGrey),
+                            style: TextStyle(color: Colors.grey),
                             children: [
                               TextSpan(text: 'Ao criar sua conta, você aceita os '),
                               TextSpan(text: 'Termos de uso', style: TextStyle(fontWeight: FontWeight.bold)),
@@ -73,7 +73,6 @@ class _RegisterState extends State<Register> {
                 color: Colors.blue[900],
                 textColor: Colors.white,
                 onPressed: () {},
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
               ),
             ),
 
@@ -82,7 +81,7 @@ class _RegisterState extends State<Register> {
               padding: EdgeInsets.only(top: 15),
               child: RichText(
                 text: TextSpan(
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Theme.of(context).textTheme.button.color),
                   children: [
                     TextSpan(text: 'Já possui conta? '),
                     TextSpan(text: 'Faça Login', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.orange[700])),

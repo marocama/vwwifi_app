@@ -8,7 +8,7 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  bool _showPassword = false;
+  bool _showPassword = true;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,67 +18,56 @@ class _AccountState extends State<Account> {
       ),
 
       body: Container(
-        margin: EdgeInsets.all(20.0),
+        margin: EdgeInsets.all(15),
         width: MediaQuery.of(context).size.width,
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
             Card(
-              elevation: 10,
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 15),
-                    child: Column(
-                      children: <Widget>[
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Nome Completo', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "Marcus Roberto",
-                          style: TextStyle(fontSize:15),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Email', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "marcus.rcm@outlook.com",
-                          style: TextStyle(fontSize:15),
-                          enabled: false,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'CPF/CNPJ', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "429.759.388-29",
-                          style: TextStyle(fontSize:15),
-                          enabled: false,
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Celular', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "(35) 99868-1301",
-                          style: TextStyle(fontSize:15),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'CEP', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "12.990-000",
-                          style: TextStyle(fontSize:15),
-                        ),
-                        TextFormField(
-                          decoration: InputDecoration(labelText: 'Senha', suffixIcon: GestureDetector(child: Icon(Icons.remove_red_eye), onTap: () => setState(() { _showPassword = !_showPassword; })), labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                          initialValue: "vwsolucoes123",
-                          style: TextStyle(fontSize:15),
-                          obscureText: _showPassword,
-                        ),
-                        SizedBox(height: 10),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            onPressed: () {},
-                            color: Colors.indigo,
-                            textColor: Colors.white,
-                            child: Text("SALVAR"),
-                          ),
-                        ),
-                        
-                      ],
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 5),
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Nome Completo', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                      initialValue: "Marcus Roberto",
+                      style: TextStyle(fontSize:15),
                     ),
-                  ),
-                ],
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Email', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                      initialValue: "marcus.rcm@outlook.com",
+                      style: TextStyle(fontSize:15, color: Colors.grey),
+                      enabled: false,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'CPF/CNPJ', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                      initialValue: "429.759.388-29",
+                      style: TextStyle(fontSize:15, color: Colors.grey),
+                      enabled: false,
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Celular', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                      initialValue: "(35) 99868-1301",
+                      style: TextStyle(fontSize:15),
+                    ),
+                    TextFormField(
+                      decoration: InputDecoration(labelText: 'Senha', suffixIcon: GestureDetector(child: Icon(Icons.remove_red_eye), onTap: () => setState(() { _showPassword = !_showPassword; })), labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                      initialValue: "vwsolucoes123",
+                      style: TextStyle(fontSize:15),
+                      obscureText: _showPassword,
+                    ),
+                    SizedBox(height: 10),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        onPressed: () {},
+                        color: Colors.indigo,
+                        textColor: Colors.white,
+                        child: Text("SALVAR"),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(height: 80),
