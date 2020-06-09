@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vwwifi/components/BoardCard.dart';
 
@@ -11,6 +12,12 @@ class Home extends StatefulWidget {
 enum Choice { visualizar, editar, apagar }
 
 class _HomeState extends State<Home> {
+
+  _deslogarUsuario() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    await auth.signOut();
+    Navigator.pushReplacementNamed(context, "/home");
+  }
 
   Widget build(BuildContext context) {
 
@@ -120,7 +127,9 @@ class _HomeState extends State<Home> {
       ), 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.pushNamed(context, "/new"); },
+        onPressed: () {
+          _deslogarUsuario();
+         },
         tooltip: 'Registrar transmissor',
         backgroundColor: Colors.orange[500],
         
