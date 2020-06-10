@@ -16,17 +16,21 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
 
     > Quando for ler, é possível visualizar a resposta bruta, ou importar uma estilização pré definida
 
+# Proximos passos
+    > Recuperação de senha em alertdialog
+    > Lista de transmissores puxando do firebase
+
 # Telas
     [ ] Splash
     [X] Login
     [X] Cadastro
-    [X] Lista de Transmissores *
-    [X] Novo Transmissor *
+    [X] Lista de Transmissores 
+    [X] Novo Transmissor 
     [X] Editar Transmissor
     [X] Apagar Transmissor
     [X] Visualizar Transmissor
     [X] Enviar Comando
-    [X] Perfil *
+    [X] Perfil 
 
 # Cadastro de transmissor
     > ID
@@ -55,25 +59,6 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
     > Proprietário
         > Identificador
         > Nome
-
-# Widgets para implementar
-    > SafeArea
-    > Expanded (Lista de transmissores)
-    > Wrap (Ao inves de Row, pela quebra de linha automatica)
-    > FutureBuilder (Para requisições http)
-    > SliverAppBar(Gerenciar melhor barra do topo)
-    > ClipRReact(Arredondar cantos de outros widgets)
-    > Hero (Animar objetos que vao para outra tela)
-    > Tooltip (Acessibilidade em icones e imagens)
-    > FittedBox (Fazer caber um widget dentro de outro)
-    > Align (alinhar um widget)
-    > Positioned (alinhar em cima de um stack)
-    > Dismissible (animar e dar opcoes nas laterais de um item de uma lista)
-    > SizedBox (bom para definir espaços entre widgets)
-    > ValueListenableBuilder (gerenciar os mesmos dados em varios widgets)
-    > Draggable (arrastar widgets)
-
-    > Stack (verificar pra que serve)
 
 # Protocolo Transmissor
    

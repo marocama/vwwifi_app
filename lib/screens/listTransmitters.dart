@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:vwwifi/components/BoardCard.dart';
+import 'package:vwwifi/util/Firebase.dart';
 
 class Home extends StatefulWidget {
   Home({Key key}) : super(key: key);
@@ -12,12 +13,6 @@ class Home extends StatefulWidget {
 enum Choice { visualizar, editar, apagar }
 
 class _HomeState extends State<Home> {
-
-  _deslogarUsuario() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    await auth.signOut();
-    Navigator.pushReplacementNamed(context, "/home");
-  }
 
   Widget build(BuildContext context) {
 
@@ -93,7 +88,7 @@ class _HomeState extends State<Home> {
         actions: <Widget>[
           GestureDetector(
             child: Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
-            onTap: () { Navigator.pushNamed(context, "/login"); },
+            onTap: () { Firebase.logoutUser(); Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false); },
           ),
           
           Padding(
@@ -128,7 +123,7 @@ class _HomeState extends State<Home> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _deslogarUsuario();
+          //_deslogarUsuario();
          },
         tooltip: 'Registrar transmissor',
         backgroundColor: Colors.orange[500],

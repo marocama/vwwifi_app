@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vwwifi/components/BoardCard.dart';
 import 'package:vwwifi/components/ExtensionCard.dart';
-import 'package:vwwifi/util.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Transmitter extends StatefulWidget {
   Transmitter({Key key}) : super(key: key);
@@ -74,6 +74,13 @@ class _TransmitterState extends State<Transmitter> {
           );
         },
       );
+    }
+
+    _deslogarUsuario() async {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      await auth.signOut();
+      //Navigator.of(context).pushNamedAndRemoveUntil("/login", (Route<dynamic> route) => false);
+      //Navigator.pushReplacementNamed(context, "/login");
     }
 
     Future<void> _rename() async {
@@ -203,7 +210,7 @@ class _TransmitterState extends State<Transmitter> {
       ), 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () { Navigator.pushNamed(context, "/send"); },
+        onPressed: () => _deslogarUsuario(),
         tooltip: 'Enviar',
         backgroundColor: Colors.orange,
         child: const Icon(Icons.send, color: Colors.white),
