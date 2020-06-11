@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vwwifi/util.dart';
+import 'package:vwwifi/constants/Themes.dart';
+import 'package:vwwifi/util/Firebase.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key key}) : super(key: key);
@@ -9,20 +10,25 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  
   bool _showPassword = false;
 
-  Widget build(BuildContext context) {
-
-    Future<void> _equipament() async {
-      return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            //title:  Text('Equipamentos', style: TextStyle(fontSize: 16)),
-            content: SingleChildScrollView(
-              child: ListBody(
+  _equipamentDialog() async {
+    showGeneralDialog(
+      barrierLabel: "Equipamentos",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.7),
+      transitionDuration: Duration(milliseconds: 500),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Align(
+          alignment: Alignment.center,
+          child: Card(
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height-169, left: 15, right: 15),
+            child: Container(
+              padding: EdgeInsets.fromLTRB(15, 5, 15, 20),
+              child: Column(
                 children: <Widget>[
-
                   ListTile(
                     title: Text("Convidados:"),
                     subtitle: RichText(
@@ -43,50 +49,112 @@ class _ProfileState extends State<Profile> {
                     subtitle: Text("30/06/2020", style: TextStyle(color: Colors.grey)),
                     trailing: Icon(Icons.payment),
                   ),
-                  
                 ],
               ),
             ),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () { Navigator.of(context).pop(); }, 
-                child: Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-    }
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0, 1), end: Offset(0, 0.4)).animate(anim),
+          child: child,
+        );
+      },
+    );
+  }
 
-    Future<void> _help() async {
-      return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            //title:  Text('Ajuda', style: TextStyle(fontSize: 16)),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text("Consulte nosso site."),
-                ],
-              ),
+  _helpDialog() async {
+    showGeneralDialog(
+      barrierLabel: "Ajuda",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.7),
+      transitionDuration: Duration(milliseconds: 500),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Card(
+          margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height-77, left: 15, right: 15),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 5, 15, 20),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text("Consulte nosso site para mais informações e meios de contato."),
+                ),
+              ],
             ),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () { Navigator.of(context).pop(); },
-                child: Text("IR"),
-              ),
-            ],
-          );
-        },
-      );
-    }
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.4)).animate(anim),
+          child: child,
+        );
+      },
+    );
+  }
 
+  _logoutDialog() async {
+    print("email verificado:");
+    print(Firebase.getCurrentUser().then((value) => print(value.isEmailVerified.toString())));
+    print("nome:");
+    print(Firebase.getCurrentUser().then((value) => print(value.displayName.toString())));
+    print("email:");
+    print(Firebase.getCurrentUser().then((value) => print(value.email.toString())));
+    print("telefone:");
+    print(Firebase.getCurrentUser().then((value) => print(value.phoneNumber.toString())));
+    print("photo:");
+    print(Firebase.getCurrentUser().then((value) => print(value.photoUrl.toString())));
+    print("uid:");
+    print(Firebase.getCurrentUser().then((value) => print(value.uid.toString())));
+    showGeneralDialog(
+      barrierLabel: "Sair",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.7),
+      transitionDuration: Duration(milliseconds: 500),
+      context: context,
+      pageBuilder: (_, __, ___) {
+        return Card(
+          margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height-109, left: 15, right: 15),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(15, 5, 15, 20),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: Text("Tem certeza que deseja sair?"),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    FlatButton(
+                      child: Text("SAIR"),
+                      onPressed: () => Firebase.logoutUser().then((value) => Navigator.pushReplacementNamed(context, '/login')),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (_, anim, __, child) {
+        return SlideTransition(
+          position: Tween(begin: Offset(0.0, 1.0), end: Offset(0.0, 0.4)).animate(anim),
+          child: child,
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Perfil"),
       ),
-
       body: Container(
         margin: EdgeInsets.all(20.0),
         width: MediaQuery.of(context).size.width,
@@ -105,7 +173,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     CircleAvatar(
                       child: Icon(Icons.camera_alt, color: Colors.white, size: 18),
-                      backgroundColor: Color(0xFF1472FF),
+                      backgroundColor: Colors.blue[700],
                       radius: 15,
                     ),
                   ],
@@ -129,22 +197,31 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: 25),
 
             ListTile(
-              leading: Icon(Icons.vpn_key, color: Color(0xFF1472FF)),
+              leading: Icon(Icons.vpn_key),
               title: Text("Conta"),
               subtitle: Text("Informações de contato, senha"),
-              onTap: () { Navigator.pushNamed(context, "/account"); },
+              onTap: () { Firebase.getDataLoggedUser(); },
             ),
+            Divider(),
             ListTile(
-              leading: Icon(Icons.developer_board, color: Color(0xFF1472FF)),
+              leading: Icon(Icons.developer_board),
               title: Text("Equipamentos"),
               subtitle: Text("Utilização, convidados, vencimentos"),
-              onTap: _equipament,
+              onTap: () => _equipamentDialog(),
             ),
+            Divider(),
             ListTile(
-              leading: Icon(Icons.help_outline, color: Color(0xFF1472FF)),
+              leading: Icon(Icons.help_outline),
               title: Text("Ajuda"),
               subtitle: Text("Guia, fale conosco, termos"),
-              onTap: _help,
+              onTap: () => _helpDialog(),
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text("Sair"),
+              //subtitle: Text("Guia, fale conosco, termos"),
+              onTap: () => _logoutDialog(),
             ),
             
             

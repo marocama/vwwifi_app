@@ -1,6 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:vwwifi/components/BoardCard.dart';
+import 'package:flutter/material.dart';
 import 'package:vwwifi/util/Firebase.dart';
 
 class Home extends StatefulWidget {
@@ -77,8 +76,7 @@ class _HomeState extends State<Home> {
     }
 
     
-    return Scaffold(
-      
+    return Scaffold(  
       appBar: AppBar(
         leading: Container(
           margin: EdgeInsets.only(left: 20.0),
@@ -90,7 +88,6 @@ class _HomeState extends State<Home> {
             child: Icon(Icons.help, size: 28, semanticLabel: 'Ajuda'),
             onTap: () { Firebase.logoutUser(); Navigator.pushNamedAndRemoveUntil(context, "/login", (Route<dynamic> route) => false); },
           ),
-          
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25.0),
             child: GestureDetector(
@@ -100,7 +97,6 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-
       body: Container(
         width: MediaQuery.of(context).size.width,
         child: ListView(
@@ -112,7 +108,6 @@ class _HomeState extends State<Home> {
               child: Text('Dispositivos:', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
             ),
             
-            
             BoardCard(),
             BoardCard(),
 
@@ -122,12 +117,9 @@ class _HomeState extends State<Home> {
       ), 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          //_deslogarUsuario();
-         },
+        onPressed: () {},
         tooltip: 'Registrar transmissor',
         backgroundColor: Colors.orange[500],
-        
         child: const Icon(Icons.add, color: Colors.white, size: 35),
       ),
     );

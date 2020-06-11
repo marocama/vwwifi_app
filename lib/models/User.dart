@@ -29,15 +29,21 @@ class User {
   String _password;
   String _phone;
   String _photoUrl;
+  String _accountType;
+  String _expire;
+  int _maxGuests;
+
 
   /*
   fromMap(Map data) {
     User user = User();
+
     user._uid = data['uid'];
+    user.
 
     return user;
-  }
-  */
+  }*/
+  
 
   Map<String, dynamic> toMap() {
 

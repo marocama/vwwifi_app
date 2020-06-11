@@ -24,7 +24,7 @@ class _RegisterState extends State<Register> {
 
     setState(() { _loading = true; });
 
-    String result = await Firebase.registerUser(_controllerEmail.text, _controllerPassw.text);
+    String result = await Firebase.registerUser(_controllerEmail.text, _controllerPassw.text, _controllerNameC.text);
 
     final snackBar = SnackBar(content: Text(result, style: TextStyle(color: Colors.white)), backgroundColor: (result.contains('Sucesso') ? Colors.green[300] : Colors.red[300]), behavior: SnackBarBehavior.floating);
     

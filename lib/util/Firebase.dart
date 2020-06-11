@@ -43,12 +43,16 @@ class Firebase {
     }
   }
 
-  static Future<String> registerUser(String email, String password) async {
+  static Future<String> registerUser(String email, String password, String name) async {
 
     AuthResult result;
 
     try {
       result = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email.trim(), password: password);
+
+      UserUpdateInfo info = UserUpdateInfo();
+      info.displayName = name;
+      result.user.updateProfile(info);
 
       result.user.sendEmailVerification();
 
@@ -79,6 +83,11 @@ class Firebase {
     await FirebaseAuth.instance.signOut();
   }
 
+  static Future<void> recoveryPassword(String email) async {
+
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim());
+  }
+
   static Future<FirebaseUser> getCurrentUser() async {
 
     return await FirebaseAuth.instance.currentUser();
@@ -89,23 +98,26 @@ class Firebase {
     FirebaseUser firebaseUser = await getCurrentUser();
     String uid = firebaseUser.uid;
 
-    Firestore db = Firestore.instance;
+    DocumentSnapshot snapshot = await Firestore.instance.collection("users").document(uid).get();
 
-    DocumentSnapshot snapshot = await db.collection("users").document(uid).get();
-
+    print(snapshot.data.toString());
+    print(snapshot.data['name']);
+    print(snapshot.data['name'].toString());
+    print(snapshot.data['maxGuests']);
+    print(snapshot.data['maxGuests'].toString());
     //User user = User.fromMap(snapshot.data);
     
     //return user;
 
-    Map<String, dynamic> dados = snapshot.data;
-    String name  = dados['name'];
-    String email = dados["email"];
+    //Map<String, dynamic> dados = snapshot.data;
+    //String name  = dados['name'];
+    //String email = dados["email"];
 
-    User usuario = User();
-    usuario.name = name;
-    usuario.email= email;
+    //User usuario = User();
+    //usuario.name = name;
+    //usuario.email= email;
 
-    return usuario;
+    //return usuario;
 
   }
 }
