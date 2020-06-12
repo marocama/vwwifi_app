@@ -3,13 +3,14 @@ import 'package:vwwifi/screens/Register.dart';
 import 'package:vwwifi/screens/ListBord.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vwwifi/screens/account.dart';
 import 'package:vwwifi/screens/profile.dart';
 
 class RouteGenerator {
 
   static Route<dynamic> generateRoute(RouteSettings settings){
 
-    //final args = settings.arguments;
+    final args = settings.arguments;
 
     switch( settings.name ){
       case "/login" :
@@ -26,7 +27,11 @@ class RouteGenerator {
         );
       case "/profile" :
         return MaterialPageRoute(
-          builder: (_) => Profile()
+          builder: (_) => Profile(args)
+        );
+      case "/account" :
+        return MaterialPageRoute(
+          builder: (_) => Account()
         );
       default:
         _erroRota();

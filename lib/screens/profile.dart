@@ -1,17 +1,18 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:vwwifi/constants/Themes.dart';
+import 'package:vwwifi/models/User.dart';
 import 'package:vwwifi/util/Firebase.dart';
 
 class Profile extends StatefulWidget {
-  Profile({Key key}) : super(key: key);
+  final User user;
+
+  Profile(this.user);
 
   @override
   _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  
-  bool _showPassword = false;
 
   _equipamentDialog() async {
     showGeneralDialog(
@@ -24,29 +25,24 @@ class _ProfileState extends State<Profile> {
         return Align(
           alignment: Alignment.center,
           child: Card(
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height-169, left: 15, right: 15),
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height-241, left: 15, right: 15),
             child: Container(
               padding: EdgeInsets.fromLTRB(15, 5, 15, 20),
               child: Column(
                 children: <Widget>[
                   ListTile(
+                    title: Text("Código da conta:"),
+                    subtitle: Text(widget.user.uid, style: TextStyle(color: Colors.grey)),
+                    trailing: Icon(Icons.code),
+                  ),
+                  ListTile(
                     title: Text("Convidados:"),
-                    subtitle: RichText(
-                      text: TextSpan(
-                        style: TextStyle(color: Colors.grey),
-                        children: <TextSpan> [
-                          TextSpan(text: '2', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: ' em uso | '),
-                          TextSpan(text: '1', style: TextStyle(fontWeight: FontWeight.bold)),
-                          TextSpan(text: ' livre'),
-                        ],
-                      ),
-                    ),
+                    subtitle: Text("2 em uso"),
                     trailing: Icon(Icons.supervised_user_circle),
                   ),
                   ListTile(
                     title: Text("Vencimento:"),
-                    subtitle: Text("30/06/2020", style: TextStyle(color: Colors.grey)),
+                    subtitle: Text(widget.user.expire.day.toString() + "/" + widget.user.expire.month.toString() + "/" + widget.user.expire.year.toString(), style: TextStyle(color: Colors.grey)),
                     trailing: Icon(Icons.payment),
                   ),
                 ],
@@ -97,18 +93,6 @@ class _ProfileState extends State<Profile> {
   }
 
   _logoutDialog() async {
-    print("email verificado:");
-    print(Firebase.getCurrentUser().then((value) => print(value.isEmailVerified.toString())));
-    print("nome:");
-    print(Firebase.getCurrentUser().then((value) => print(value.displayName.toString())));
-    print("email:");
-    print(Firebase.getCurrentUser().then((value) => print(value.email.toString())));
-    print("telefone:");
-    print(Firebase.getCurrentUser().then((value) => print(value.phoneNumber.toString())));
-    print("photo:");
-    print(Firebase.getCurrentUser().then((value) => print(value.photoUrl.toString())));
-    print("uid:");
-    print(Firebase.getCurrentUser().then((value) => print(value.uid.toString())));
     showGeneralDialog(
       barrierLabel: "Sair",
       barrierDismissible: true,
@@ -155,21 +139,20 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         title: Text("Perfil"),
       ),
-      body: Container(
-        margin: EdgeInsets.all(20.0),
-        width: MediaQuery.of(context).size.width,
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: <Widget>[
-            Row(
+      body: ListView(
+        scrollDirection: Axis.vertical,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(top: 20, left: 18),
+            child: Row(
               children: <Widget>[
                 Stack(
                   alignment: AlignmentDirectional.bottomEnd,
                   children: <Widget>[
                     CircleAvatar(
-                      backgroundImage: ExactAssetImage('assets/images/perfil.jpg'),
-                      backgroundColor: Colors.white,
-                      radius: 50,
+                      backgroundImage: (widget.user.photoUrl.isNotEmpty) ? NetworkImage(widget.user.photoUrl) : null,
+                      backgroundColor: (widget.user.photoUrl.isNotEmpty) ? Colors.transparent : Colors.grey,
+                      radius: 40,
                     ),
                     CircleAvatar(
                       child: Icon(Icons.camera_alt, color: Colors.white, size: 18),
@@ -183,51 +166,52 @@ class _ProfileState extends State<Profile> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(left: 20),
-                      child: Text("Vinagrete da Silva", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
+                      child: Text(widget.user.name.split(" ").first + " " + widget.user.name.split(" ").last, style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 5, 0, 0),
-                      child: Text("Administrador", style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15, color: Colors.grey)),
+                      child: Text(widget.user.accountType, style: TextStyle(fontWeight: FontWeight.w400, fontSize: 15, color: Colors.grey)),
                     ),
                   ],
                 ),
               ],
             ),
-            
-            SizedBox(height: 25),
+          ),
+          SizedBox(height: 25),
+          Divider(height: 0),
 
-            ListTile(
-              leading: Icon(Icons.vpn_key),
-              title: Text("Conta"),
-              subtitle: Text("Informações de contato, senha"),
-              onTap: () { Firebase.getDataLoggedUser(); },
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.developer_board),
-              title: Text("Equipamentos"),
-              subtitle: Text("Utilização, convidados, vencimentos"),
-              onTap: () => _equipamentDialog(),
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.help_outline),
-              title: Text("Ajuda"),
-              subtitle: Text("Guia, fale conosco, termos"),
-              onTap: () => _helpDialog(),
-            ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text("Sair"),
-              //subtitle: Text("Guia, fale conosco, termos"),
-              onTap: () => _logoutDialog(),
-            ),
+          SizedBox(height: 25),
+          ListTile(
+            leading: Icon(Icons.developer_board),
+            title: Text("Equipamentos"),
+            subtitle: Text("Convidados, vencimentos"),
+            onTap: () => _equipamentDialog(),
+          ),
+          ListTile(
+            leading: Icon(Icons.help_outline),
+            title: Text("Ajuda"),
+            subtitle: Text("Fale conosco, termos"),
+            onTap: () => _helpDialog(),
+          ),
+          ListTile(
+            leading: Icon(Icons.vpn_key),
+            title: Text("Alterar senha"),
+            onTap: () => Navigator.pushNamed(context, "/account"),
+          ),
+          ListTile(
+            leading: Icon(Icons.delete_forever),
+            title: Text("Excluir conta"),
+            onTap: () => _helpDialog(),
+          ),
+          ListTile(
+            leading: Icon(Icons.exit_to_app),
+            title: Text("Sair"),
+            onTap: () => _logoutDialog(),
+          ),
             
             
-            SizedBox(height: 80),
-          ],
-        ),
+          SizedBox(height: 80),
+        ],
       ), 
     );
   }

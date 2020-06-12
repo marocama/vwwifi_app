@@ -43,7 +43,7 @@ class Firebase {
     }
   }
 
-  static Future<String> registerUser(String email, String password, String name) async {
+  static Future<String> registerUser(String email, String password, String name, String phone) async {
 
     AuthResult result;
 
@@ -53,6 +53,17 @@ class Firebase {
       UserUpdateInfo info = UserUpdateInfo();
       info.displayName = name;
       result.user.updateProfile(info);
+
+      await Firestore.instance.collection("users").document(result.user.uid).setData({
+        "email": email, 
+        "name": name, 
+        "phone": phone, 
+        "photoUrl": "",
+        "accountType": "Administrador",
+        "created_at": DateTime.now(),
+        "last_login" : DateTime.now(),
+        "expire": DateTime.now().add(Duration(days: 30)),
+      });
 
       result.user.sendEmailVerification();
 
@@ -83,6 +94,11 @@ class Firebase {
     await FirebaseAuth.instance.signOut();
   }
 
+  static Future<void> lastLogin() async {
+
+    await Firestore.instance.collection("users").document(await getCurrentUser().then((value) => value.uid)).updateData({ "last_login": DateTime.now() });
+  }
+
   static Future<void> recoveryPassword(String email) async {
 
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim());
@@ -96,28 +112,19 @@ class Firebase {
   static Future<User> getDataLoggedUser() async {
 
     FirebaseUser firebaseUser = await getCurrentUser();
-    String uid = firebaseUser.uid;
 
-    DocumentSnapshot snapshot = await Firestore.instance.collection("users").document(uid).get();
+    DocumentSnapshot snapshot = await Firestore.instance.collection("users").document(firebaseUser.uid).get();
 
-    print(snapshot.data.toString());
-    print(snapshot.data['name']);
-    print(snapshot.data['name'].toString());
-    print(snapshot.data['maxGuests']);
-    print(snapshot.data['maxGuests'].toString());
-    //User user = User.fromMap(snapshot.data);
+    User user = User(
+      uid: firebaseUser.uid,
+      name: snapshot.data["name"],
+      email: firebaseUser.email,
+      phone: snapshot.data["phone"],
+      expire: snapshot.data["expire"].toDate(),
+      photoUrl: snapshot.data["photoUrl"],
+      accountType: snapshot.data["accountType"],
+    );
     
-    //return user;
-
-    //Map<String, dynamic> dados = snapshot.data;
-    //String name  = dados['name'];
-    //String email = dados["email"];
-
-    //User usuario = User();
-    //usuario.name = name;
-    //usuario.email= email;
-
-    //return usuario;
-
+    return user;
   }
 }

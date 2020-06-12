@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vwwifi/models/User.dart';
 import 'package:vwwifi/util/Firebase.dart';
 import 'package:vwwifi/components/BoardCard.dart';
 
@@ -12,15 +13,14 @@ enum Choice { visualizar, editar, apagar }
 class _ListBoardState extends State<ListBoard> {
 
   bool _loading = false;
-
-  Future<void> _refresh() async {}
+  User user = User(uid: "", name: "", email: "", password: "", phone: "", expire: DateTime.now(), photoUrl: "", accountType: "");
 
   @override
   void initState() {
     super.initState();
     setState(() { _loading = true; });
-    Firebase.getCurrentUser().then((value) { if(value == null) Navigator.pushReplacementNamed(context, '/login'); });
-    setState(() { _loading = false; });
+    Firebase.getCurrentUser().then((value) { (value == null) ? Navigator.pushReplacementNamed(context, '/login') : Firebase.lastLogin(); });
+    Firebase.getDataLoggedUser().then((value) { setState(() { _loading = false; user = value; }); });
   }
 
   @override
@@ -33,10 +33,11 @@ class _ListBoardState extends State<ListBoard> {
             padding: EdgeInsets.fromLTRB(20.0, 10.0, 25.0, 10.0),
             child: GestureDetector(
               child: CircleAvatar(
-                backgroundImage: NetworkImage("https://cdn-ofuxico.akamaized.net/img/upload/noticias/2019/06/19/bruna_marquezine_reproducao_instagram_351888_36.jpg"),
+                backgroundImage: (user.photoUrl.isNotEmpty) ? NetworkImage(user.photoUrl) : null,
+                backgroundColor: (user.photoUrl.isNotEmpty) ? Colors.transparent : Colors.grey,
                 radius: 18.0,
               ),
-              onTap: () { Navigator.pushNamed(context, "/profile"); },
+              onTap: () { Navigator.pushNamed(context, "/profile", arguments: user); },
             ),
           ),
         ],

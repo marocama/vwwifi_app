@@ -1,5 +1,5 @@
-import 'package:vwwifi/util/Firebase.dart';
 import 'package:flutter/material.dart';
+import 'package:vwwifi/util/Firebase.dart';
 
 class Register extends StatefulWidget {
   Register({Key key}) : super(key: key);
@@ -24,7 +24,7 @@ class _RegisterState extends State<Register> {
 
     setState(() { _loading = true; });
 
-    String result = await Firebase.registerUser(_controllerEmail.text, _controllerPassw.text, _controllerNameC.text);
+    String result = await Firebase.registerUser(_controllerEmail.text, _controllerPassw.text, _controllerNameC.text, _controllerPhone.text);
 
     final snackBar = SnackBar(content: Text(result, style: TextStyle(color: Colors.white)), backgroundColor: (result.contains('Sucesso') ? Colors.green[300] : Colors.red[300]), behavior: SnackBarBehavior.floating);
     
