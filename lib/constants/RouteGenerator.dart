@@ -1,10 +1,11 @@
 import 'package:vwwifi/screens/Login.dart';
 import 'package:vwwifi/screens/Register.dart';
-import 'package:vwwifi/screens/ListBord.dart';
+import 'package:vwwifi/screens/ListBoard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:vwwifi/screens/account.dart';
-import 'package:vwwifi/screens/profile.dart';
+import 'package:vwwifi/screens/Account.dart';
+import 'package:vwwifi/screens/Profile.dart';
+import 'package:vwwifi/screens/ViewBoard.dart';
 
 class RouteGenerator {
 
@@ -24,6 +25,10 @@ class RouteGenerator {
       case "/listBoard" :
         return MaterialPageRoute(
           builder: (_) => ListBoard()
+        );
+      case "/viewBoard" :
+        return MaterialPageRoute(
+          builder: (_) => ViewBoard(args)
         );
       case "/profile" :
         return MaterialPageRoute(

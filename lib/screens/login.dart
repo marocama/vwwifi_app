@@ -104,6 +104,38 @@ class _LoginState extends State<Login> {
     );
   }
 
+  _dialog() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.green,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          insetPadding: EdgeInsets.symmetric(horizontal: 10),
+          content: Builder(
+            builder: (context) {
+              return Container(
+                //width: 1700,
+                //height: MediaQuery.of(context).size.height,
+                child: Text("olaa"),
+              );
+            },
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () { Navigator.of(context).pop(); }, 
+              child: Text("CANCELAR"),
+            ),
+            FlatButton(
+              onPressed: () { Navigator.of(context).pop(); }, 
+              child: Text("APAGAR"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -160,7 +192,7 @@ class _LoginState extends State<Login> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         child: GestureDetector(
                           child: Text("Esqueci minha senha", textAlign: TextAlign.center),
-                          onTap: () { _recoveryDialog(); },
+                          onTap: () { _dialog(); },
                         ),
                       ),
                       Row(

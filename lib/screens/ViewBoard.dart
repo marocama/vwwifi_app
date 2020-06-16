@@ -1,23 +1,80 @@
 import 'package:flutter/material.dart';
 import 'package:vwwifi/components/BoardCard.dart';
 import 'package:vwwifi/components/ExtensionCard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
-class Transmitter extends StatefulWidget {
-  Transmitter({Key key}) : super(key: key);
+class ViewBoard extends StatefulWidget {
+  final Map values;
+
+  ViewBoard(this.values);
 
   @override
-  _TransmitterState createState() => _TransmitterState();
+  _ViewBoardState createState() => _ViewBoardState();
 }
 
 enum Choice { visualizar, editar, apagar }
 
-class _TransmitterState extends State<Transmitter> {
-  bool _s1 = false, _s2 = false;
+class _ViewBoardState extends State<ViewBoard> {
 
-  Widget build(BuildContext context) {
+  Future<void> _rename(String name) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextFormField(
+                  decoration: InputDecoration(labelText: 'Identificador', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    style: TextStyle(fontSize:15),
+                    initialValue: name,
+                ),      
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () { Navigator.of(context).pop(); }, 
+              child: Text("CANCELAR"),
+            ),
+            FlatButton(
+              onPressed: () { Navigator.of(context).pop(); }, 
+              child: Text("SALVAR"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
-    createNewMessage() {
+  Future<void> _delete() async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text("Tem certeza que deseja apagar?", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+                Text("\nA placa estará disponível para inclusão novamente em instantes."),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () { Navigator.of(context).pop(); }, 
+              child: Text("CANCELAR"),
+            ),
+            FlatButton(
+              onPressed: () { Navigator.of(context).pop(); }, 
+              child: Text("APAGAR"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  createNewMessage() {
       return showDialog(
         barrierDismissible: false,
         context: context,
@@ -32,7 +89,7 @@ class _TransmitterState extends State<Transmitter> {
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
                       width: (MediaQuery.of(context).size.width/2),
-                      height: (MediaQuery.of(context).size.height/2),
+                      height: (MediaQuery.of(context).size.height-250),
                       child: Column(
                         children: <Widget>[
                           new Text('?'),
@@ -76,67 +133,16 @@ class _TransmitterState extends State<Transmitter> {
       );
     }
 
-    _deslogarUsuario() async {
-      FirebaseAuth auth = FirebaseAuth.instance;
-      await auth.signOut();
-      //Navigator.of(context).pushNamedAndRemoveUntil("/login", (Route<dynamic> route) => false);
-      //Navigator.pushReplacementNamed(context, "/login");
-    }
 
-    Future<void> _rename() async {
-      return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Saída 1', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                    style: TextStyle(fontSize:15),
-                    initialValue: 'Toldo',
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Saída 2', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                    style: TextStyle(fontSize:15),
-                    initialValue: 'Aspirador',
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Entrada 1', labelStyle: TextStyle(fontWeight: FontWeight.bold)),
-                    style: TextStyle(fontSize:15),
-                    initialValue: 'Sensor de Luminosidade',
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              FlatButton(
-                onPressed: () { Navigator.of(context).pop(); }, 
-                child: Text("CANCELAR"),
-              ),
-              FlatButton(
-                onPressed: () { Navigator.of(context).pop(); }, 
-                child: Text("SALVAR"),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          GestureDetector(
-            child: Icon(Icons.edit, size: 28, semanticLabel: 'Renomear'),
-            onTap: () { Navigator.pushNamed(context, "/rename"); },
-          ),
-          
+        actions: <Widget>[         
           Padding(
             padding: EdgeInsets.fromLTRB(20, 10, 25, 10),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage("https://cdn-ofuxico.akamaized.net/img/upload/noticias/2019/06/19/bruna_marquezine_reproducao_instagram_351888_36.jpg"),
-              radius: 18,
+            child: GestureDetector(
+              child: Icon(Icons.edit, size: 28, semanticLabel: 'Renomear'),
+              onTap: () {},
             ),
           ),
         ],
@@ -147,10 +153,15 @@ class _TransmitterState extends State<Transmitter> {
         child: ListView(
           scrollDirection: Axis.vertical,
           children: <Widget>[
-
             SizedBox(height: 15),
-            
-            BoardCard(),
+            BoardCard(
+              uid: widget.values["board"].documentID, 
+              name: widget.values["board"].data["name"], 
+              active: widget.values["board"].data["active"],
+              isList: true,
+              edit: () { _rename(widget.values["board"].data["name"]); },
+              delt: () { _delete(); }
+            ),
             
             ExtensionCard(),
             
@@ -210,7 +221,7 @@ class _TransmitterState extends State<Transmitter> {
       ), 
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _deslogarUsuario(),
+        onPressed: () { createNewMessage(); },
         tooltip: 'Enviar',
         backgroundColor: Colors.orange,
         child: const Icon(Icons.send, color: Colors.white),

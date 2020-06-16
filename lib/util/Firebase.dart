@@ -114,7 +114,14 @@ class Firebase {
     FirebaseUser firebaseUser = await getCurrentUser();
 
     DocumentSnapshot snapshot = await Firestore.instance.collection("users").document(firebaseUser.uid).get();
-
+    QuerySnapshot snapshotBrd = await Firestore.instance.collection("users").document(firebaseUser.uid).collection("devices").orderBy("name").getDocuments();
+    /*
+    print(snapshot.data);
+    print(snapshotBrd.documents.toString());
+    print(snapshotBrd.documents.first.data.toString());
+    print(snapshotBrd.documents.first.documentID);
+    print(snapshotBrd.documents.length);
+    */
     User user = User(
       uid: firebaseUser.uid,
       name: snapshot.data["name"],
@@ -123,6 +130,7 @@ class Firebase {
       expire: snapshot.data["expire"].toDate(),
       photoUrl: snapshot.data["photoUrl"],
       accountType: snapshot.data["accountType"],
+      boards: snapshotBrd.documents.toList(),
     );
     
     return user;

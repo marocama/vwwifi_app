@@ -7,8 +7,9 @@ class User {
   final DateTime expire;
   final String photoUrl;
   final String accountType;
+  final List boards;
 
-  User({ this.uid, this.name, this.email, this.password, this.phone, this.expire, this.photoUrl, this.accountType });
+  User({ this.uid, this.name, this.email, this.password, this.phone, this.expire, this.photoUrl, this.accountType, this.boards });
   
   User.fromData(Map<String, dynamic> data) : 
     uid         = data['uid'],
@@ -18,8 +19,8 @@ class User {
     phone       = data['phone'],
     expire      = data['expire'].toDate(),
     photoUrl    = data['photoUrl'],
-    accountType = data['accountType'];
-
+    accountType = data['accountType'],
+    boards      = data['boards'];
 
   Map<String, dynamic> toMap() {
 
@@ -32,6 +33,7 @@ class User {
       "expire"      : this.expire,
       "photoUrl"    : this.photoUrl,
       "accountType" : this.accountType,
+      "boards"      : this.boards,
     };
   
     return map;
