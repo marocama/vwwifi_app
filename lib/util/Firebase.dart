@@ -63,6 +63,7 @@ class Firebase {
         "created_at": DateTime.now(),
         "last_login" : DateTime.now(),
         "expire": DateTime.now().add(Duration(days: 30)),
+        "maxDevices": 0,
       });
 
       result.user.sendEmailVerification();
@@ -99,9 +100,28 @@ class Firebase {
     await Firestore.instance.collection("users").document(await getCurrentUser().then((value) => value.uid)).updateData({ "last_login": DateTime.now() });
   }
 
-  static Future<void> recoveryPassword(String email) async {
+  static Future<String> recoveryPassword(String email) async {
 
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim());
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email.trim());
+
+      return 'Link de recuperação enviado';
+
+    } catch (e) {
+
+      String message = "Erro na recuperação, tente novamente.";
+
+      switch(e.code) {
+        case 'ERROR_INVALID_EMAIL':
+          message = "Endereço de email inválido, tente novamente";
+          break;
+        case 'ERROR_USER_NOT_FOUND':
+          message = "Conta não encontrada, tente novamente";
+          break;
+      }
+      
+      return message;
+    }
   }
 
   static Future<FirebaseUser> getCurrentUser() async {
@@ -115,13 +135,7 @@ class Firebase {
 
     DocumentSnapshot snapshot = await Firestore.instance.collection("users").document(firebaseUser.uid).get();
     QuerySnapshot snapshotBrd = await Firestore.instance.collection("users").document(firebaseUser.uid).collection("devices").orderBy("name").getDocuments();
-    /*
-    print(snapshot.data);
-    print(snapshotBrd.documents.toString());
-    print(snapshotBrd.documents.first.data.toString());
-    print(snapshotBrd.documents.first.documentID);
-    print(snapshotBrd.documents.length);
-    */
+
     User user = User(
       uid: firebaseUser.uid,
       name: snapshot.data["name"],
@@ -130,9 +144,64 @@ class Firebase {
       expire: snapshot.data["expire"].toDate(),
       photoUrl: snapshot.data["photoUrl"],
       accountType: snapshot.data["accountType"],
-      boards: snapshotBrd.documents.toList(),
+      maxDevices: snapshot.data["maxDevices"],
+      devices: snapshotBrd.documents.toList(),
     );
     
     return user;
   }
+
+  static Future<String> registerDevice(String serial, String identify) async {
+
+    DocumentSnapshot snapshot = await Firestore.instance.collection("devices").document(serial).get();
+
+    if(!snapshot.exists) return 'Dispositivo não encontrado';
+
+    if(!snapshot.data["available"]) return 'Dispositivo já vinculado';
+
+    try {
+
+      await Firestore.instance.collection("users").document(await getCurrentUser().then((value) => value.uid)).collection("devices").document(serial).setData({ "name": identify, "registered_at": DateTime.now(), "active": snapshot.data["active"] });
+  
+      await Firestore.instance.collection("devices").document(serial).updateData({ "available": false });
+
+      return 'Novo dispositivo registrado';
+
+    } catch (e) {
+
+      return 'Erro no registro, tente novamente';
+    }
+  }
+
+  static Future<DocumentSnapshot> getDataDevice(String serial) async {
+
+    await Firestore.instance.collection("devices").document(serial).updateData({ 
+      "protocol": {
+        "ENTRADAS": {
+          "E1": true,
+          "E2": false,
+          "E3": true,
+          "E4": false,
+          "E5": true,
+          "E6": false,
+          "E7": true,
+          "E8": false,
+        },
+        "SAIDAS": {
+          "S1": false,
+          "S2": true,
+          "S3": false,
+          "S4": true,
+          "S5": false,
+          "S6": true,
+          "S7": false,
+          "S8": true,
+        }
+      } 
+    });
+
+    return await Firestore.instance.collection("devices").document(serial).get();
+
+  }
+
 }

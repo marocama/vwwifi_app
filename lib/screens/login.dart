@@ -11,6 +11,7 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   
   final _formKey = GlobalKey<FormState>();
+  final _recoKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   TextEditingController _controllerEmail = TextEditingController(text: "");
@@ -31,7 +32,7 @@ class _LoginState extends State<Login> {
 
     if(result.contains('Verifique')) Firebase.logoutUser();
     
-    final snackBar = SnackBar(content: Text(result, style: TextStyle(color: Colors.white)), backgroundColor: Colors.red[300], behavior: SnackBarBehavior.floating);
+    final snackBar = SnackBar(content: Text(result, style: TextStyle(color: Colors.white)), backgroundColor: (result.contains('Sucesso')) ? Colors.green[300] : Colors.red[300], behavior: SnackBarBehavior.floating);
     
     _scaffoldKey.currentState.showSnackBar(snackBar);
 
@@ -46,78 +47,36 @@ class _LoginState extends State<Login> {
 
     setState(() { _loading = true; });
 
-    Firebase.recoveryPassword(_controllerRecov.text);
+    String result = await Firebase.recoveryPassword(_controllerRecov.text);
 
     setState(() { _loading = false; });
 
-    final snackBar = SnackBar(content: Text("Link de recuperação enviado", style: TextStyle(color: Colors.white)), backgroundColor: Colors.green[300], behavior: SnackBarBehavior.floating);
+    final snackBar = SnackBar(content: Text(result, style: TextStyle(color: Colors.white)), backgroundColor: (result.contains('enviado')) ? Colors.green[300] : Colors.red[300], behavior: SnackBarBehavior.floating);
     
     _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 
   _recoveryDialog() async {
-    showGeneralDialog(
-      barrierLabel: "Recuperação",
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.7),
-      transitionDuration: Duration(milliseconds: 500),
-      context: context,
-      pageBuilder: (_, __, ___) {
-        return Align(
-          alignment: Alignment.center,
-          child: Card(
-            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height-178, left: 15, right: 15),
-            child: Container(
-              padding: EdgeInsets.fromLTRB(15, 5, 15, 20),
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Text("Insira seu email para recuperação: "),
-                  ),
-                  SizedBox(height: 10),
-                  TextFormField(
-                    decoration: InputDecoration(labelText: 'Email'),
-                    controller: _controllerRecov,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      FlatButton(
-                        child: Text("RECUPERAR"),
-                        onPressed: () { _recoveryProcess(); },
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
-      },
-      transitionBuilder: (_, anim, __, child) {
-        return SlideTransition(
-          position: Tween(begin: Offset(0, 1), end: Offset(0, 0.15)).animate(anim),
-          child: child,
-        );
-      },
-    );
-  }
-
-  _dialog() async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.green,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-          insetPadding: EdgeInsets.symmetric(horizontal: 10),
+          insetPadding: EdgeInsets.symmetric(horizontal: 15.0),
+          title: Text("Recuperação de senha"),
           content: Builder(
             builder: (context) {
               return Container(
-                //width: 1700,
-                //height: MediaQuery.of(context).size.height,
-                child: Text("olaa"),
+                width: MediaQuery.of(context).size.width,
+                child: Form(
+                  key: _recoKey,
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'Email'),
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) => (value.length < 5 || !value.contains('@')) ? 'Endereço de email inválido' : null,
+                    controller: _controllerRecov,
+                  ),
+                ),
               );
             },
           ),
@@ -127,8 +86,8 @@ class _LoginState extends State<Login> {
               child: Text("CANCELAR"),
             ),
             FlatButton(
-              onPressed: () { Navigator.of(context).pop(); }, 
-              child: Text("APAGAR"),
+              onPressed: () { if(_recoKey.currentState.validate()) { _recoveryProcess(); }}, 
+              child: Text("RECUPERAR"),
             ),
           ],
         );
@@ -183,7 +142,7 @@ class _LoginState extends State<Login> {
                       ButtonTheme(
                         minWidth: (MediaQuery.of(context).size.width - 30),
                         child: RaisedButton(
-                          child: Text("LOGIN"),
+                          child: Text("LOGIN", style: TextStyle(color: Colors.white)),
                           color: AppThemes.primary,
                           onPressed: () { if(_formKey.currentState.validate()) { FocusScope.of(context).requestFocus(FocusNode()); _login(); } },
                         ),
@@ -192,7 +151,7 @@ class _LoginState extends State<Login> {
                         padding: EdgeInsets.symmetric(vertical: 20),
                         child: GestureDetector(
                           child: Text("Esqueci minha senha", textAlign: TextAlign.center),
-                          onTap: () { _dialog(); },
+                          onTap: () { _recoveryDialog(); },
                         ),
                       ),
                       Row(

@@ -11,7 +11,7 @@ class AppThemes {
     accentColor:    primary,
     splashColor:    Colors.grey[900],
     cardColor:      Colors.white,
-    cardTheme:      CardTheme(elevation: 20),
+    cardTheme:      CardTheme(elevation: 30),
   );
 
   static final ThemeData darkTheme = ThemeData(

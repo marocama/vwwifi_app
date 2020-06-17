@@ -66,8 +66,10 @@ class BoardCard extends StatelessWidget {
               tooltip: 'Opções',
               icon: Icon(Icons.more_vert, color: Colors.grey),
             ) :
-            FlatButton(
-              child: Icon(Icons.arrow_forward_ios, color: Colors.grey),
+            IconButton(
+              icon: Icon(Icons.arrow_forward_ios),
+              color: Colors.grey,
+              tooltip: 'Visualizar',
               onPressed: () { show(); },
             )
           ],

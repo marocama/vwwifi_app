@@ -10,56 +10,93 @@ class ListBoard extends StatefulWidget {
 
 class _ListBoardState extends State<ListBoard> {
 
-  bool _loading = false;
-  User user = User(uid: "", name: "", email: "", password: "", phone: "", expire: DateTime.now(), photoUrl: "", accountType: "", boards: List());
+  final _regiKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  Future<void> _register() async {
-    return showDialog(
+  TextEditingController _controllerNSerial = TextEditingController(text: "");
+  TextEditingController _controllerIdentif = TextEditingController(text: "");
+
+  bool _loading = false;
+
+  User user = User(uid: "", name: "", email: "", password: "", phone: "", expire: DateTime.now(), photoUrl: "", accountType: "", maxDevices: 0, devices: List());
+
+  _registerProcess() async {
+
+    FocusScope.of(context).requestFocus(FocusNode());
+
+    Navigator.pop(context);
+
+    setState(() { _loading = true; });
+    
+    String result = "";
+
+    if(user.devices.length < user.maxDevices) {
+
+      result = await Firebase.registerDevice(_controllerNSerial.text.trim().toUpperCase(), _controllerIdentif.text);
+
+      if(result.contains('Novo')) {
+        Firebase.getDataLoggedUser().then((value) { 
+          setState(() { user = value; }); 
+        });
+      }
+    } else {
+
+      result = "Máximo de dispositivos alcançado, entre em contato";
+    }
+
+    setState(() { _loading = false; });
+
+    final snackBar = SnackBar(content: Text(result, style: TextStyle(color: Colors.white)), backgroundColor: (result.contains('Novo')) ? Colors.green[300] : Colors.red[300], behavior: SnackBarBehavior.floating);
+    
+    _scaffoldKey.currentState.showSnackBar(snackBar);
+
+  }
+
+  _registerDialog() async {
+    return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return Material(
-                    child: Container(
-                      padding: const EdgeInsets.all(16.0),
-                      width: (MediaQuery.of(context).size.width/2),
-                      height: (MediaQuery.of(context).size.height-250),
-                      child: Column(
-                        children: <Widget>[
-                          new Text('?'),
-                          Container(
-                            height: 20,
-                          ),
-                          Container(
-                            height: 10,
-                          ),
-                          TextField(decoration: InputDecoration(labelText: "Data")),
-                          Container(
-                            height: 10,
-                          ),
-                          TextField(decoration: InputDecoration(labelText: "Hora")),
-                          Container(
-                            height: 10,
-                          ),
-                          TextField(
-                              decoration: InputDecoration(labelText: 'Mensagem')),
-                          Spacer(),
-                          Row(
-                            children: <Widget>[
-                              Spacer(),
-                              FlatButton(
-                                  child: Text('sendMessage'),
-                                  onPressed: () {}),
-                              FlatButton(
-                                  child: Text('closealert'),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  }),
-                            ],
-                          ),
-                        ],
+        return AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          insetPadding: EdgeInsets.symmetric(horizontal: 15.0),
+          title: Text("Registrar dispositivo"),
+          content: Builder(
+            builder: (context) {
+              return Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height/4,
+                child: Form(
+                  key: _regiKey,
+                  child: ListView(
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Número Serial', hintText: '1234AB'),
+                        validator: (value) => (value.length != 6) ? 'Número Serial deve conter 6 caracteres' : null,
+                        controller: _controllerNSerial,
                       ),
-                    ),
-                  );
-      }
+                      TextFormField(
+                        decoration: InputDecoration(labelText: 'Identificador', hintText: 'Minha casa'),
+                        validator: (value) => (value.length < 3) ? 'Identificador muito curto' : null,
+                        controller: _controllerIdentif,
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () { Navigator.of(context).pop(); }, 
+              child: Text("CANCELAR"),
+            ),
+            FlatButton(
+              onPressed: () { if(_regiKey.currentState.validate()) { _registerProcess(); }}, 
+              child: Text("CADASTRAR"),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -74,7 +111,6 @@ class _ListBoardState extends State<ListBoard> {
         Firebase.lastLogin();
         Firebase.getDataLoggedUser().then((value) { 
           setState(() { _loading = false; user = value; }); 
-          print(user.boards.length);
         }); 
       }
     });
@@ -83,6 +119,7 @@ class _ListBoardState extends State<ListBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(  
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text('VW Soluções'),
         actions: <Widget>[
@@ -114,22 +151,22 @@ class _ListBoardState extends State<ListBoard> {
                   ),
                   Container(
                     height: MediaQuery.of(context).size.height-100,
-                    child: (user.boards.length == 0) ? 
+                    child: (user.devices.length == 0) ? 
                     ListTile(
                       title: Row(children: <Widget>[Icon(Icons.sentiment_dissatisfied), Text("  Nenhum dispositivo registrado")]), 
                       subtitle: Text("\n Clique no botão abaixo para registrar"),
                     ) : 
                     ListView.builder(
-                      itemCount: (user.boards.length + 1), 
+                      itemCount: (user.devices.length + 1), 
                       itemBuilder: (BuildContext context, int index) {
-                        return (index == user.boards.length) ?
+                        return (index == user.devices.length) ?
                         SizedBox(height: 100) :
                         BoardCard(
-                          uid: user.boards[index].documentID, 
-                          active: user.boards[index].data["active"], 
-                          name: user.boards[index].data["name"], 
+                          uid: user.devices[index].documentID, 
+                          active: user.devices[index].data["active"], 
+                          name: user.devices[index].data["name"], 
                           isList: false, 
-                          show: () { Navigator.pushNamed(context, "/viewBoard", arguments: {"board": user.boards[index], "index": index}); }
+                          show: () { Navigator.pushNamed(context, "/viewBoard", arguments: {"nSerial": user.devices[index].documentID, "name": user.devices[index].data["name"], "active": user.devices[index].data["active"], "index": index}); }
                         );
                       },
                     ),
@@ -145,7 +182,7 @@ class _ListBoardState extends State<ListBoard> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () { _register(); },
+        onPressed: () { _registerDialog(); },
         tooltip: 'Registrar transmissor',
         backgroundColor: Colors.orange[500],
         child: const Icon(Icons.add, color: Colors.white, size: 35),
