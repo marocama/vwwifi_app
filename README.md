@@ -124,9 +124,3 @@ Aplicação Flutter para gerenciamento de transmissores VW Soluções.
     > Ferramentas presentas na plataforma VW IoT:
         > Recurso de Operadores
         > Meios de Contato
-
-https://medium.com/@agungsurya/create-a-simple-animated-floatingactionbutton-in-flutter-2d24f37cfbcc
-
-https://medium.com/@anilcan/forms-in-flutter-6e1364eafdb5
-
-https://github.com/flutter/samples/blob/master/provider_shopper/lib/screens/login.dart
